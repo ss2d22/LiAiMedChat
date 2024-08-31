@@ -2,7 +2,7 @@ import './App.css'
 import { Button } from "@/components/ui/button";
 
 
-function App() {
+const App = () => {
   return (
     <>
       <Button>Click me</Button>
