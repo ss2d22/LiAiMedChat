@@ -10,7 +10,6 @@ This is the frontend for Li Med Ai Chat application which is designed to be used
 git clone https://github.com/ss2d22/LiAiMedChat.git
 ```
 
-
 ### 2) cd into the frontend and install node packages
 
 ```
@@ -18,7 +17,7 @@ cd limedaichatFrontend
 npm i
 ```
 
-### 3) rename .env.local.example to .env.local and update values 
+### 3) rename .env.local.example to .env.local and update values
 
 ```
 tbd stuff like backend port will be here
@@ -26,9 +25,8 @@ tbd stuff like backend port will be here
 
 ### 4) follow readMe in the backend folder and get the backend running
 
-### 5) run the frontend 
+### 5) run the frontend
 
 ```
 npm run dev
 ```
-
