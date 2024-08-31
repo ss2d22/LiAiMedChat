@@ -1,11 +1,14 @@
-import "./App.css";
-import { Button } from "@/components/ui/button";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import "@/App.css";
+import Auth from "@/pages/authentication";
 
 const App = () => {
   return (
-    <>
-      <Button>Click me</Button>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/authentication" element={<Auth />} />
+      </Routes>
+    </BrowserRouter>
   );
 };
 
