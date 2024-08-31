@@ -1,3 +1,5 @@
+import { books } from "@/assets";
+
 const Auth = () => {
   return (
     <div className="h-[100vh] w-[100vw] flex items-center justify-center">
@@ -5,7 +7,8 @@ const Auth = () => {
         <div className="flex flex-col gap-10 items-center justify-center">
           <div className="flex items-center justify-center flex-col">
             <div className="flex items-center justify-center">
-              <h1 className="text-5xl font-bold md:text-6xl">Auth</h1>
+              <h1 className="text-5xl font-bold md:text-6xl">欢迎</h1>
+              <img src={books} alt="books icon" className="w-[100px]" />
             </div>
           </div>
         </div>
