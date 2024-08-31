@@ -1,50 +1,34 @@
 # Li Med Ai Chat Application FrontEnd
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is the frontend for Li Med Ai Chat application which is designed to be used by the medicine students of a specific university to ask questions and get asnwers from their textbook
 
-Currently, two official plugins are available:
+## How to run :
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### 1) clone the repository :
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+```
+git clone https://github.com/ss2d22/LiAiMedChat.git
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+### 2) cd into the frontend and install node packages
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
 ```
+cd limedaichatFrontend
+npm i
+```
+
+### 3) rename .env.local.example to .env.local and update values 
+
+```
+tbd stuff like backend port will be here
+```
+
+### 4) follow readMe in the backend folder and get the backend running
+
+### 5) run the frontend 
+
+```
+npm run dev
+```
+
