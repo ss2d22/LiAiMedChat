@@ -37,9 +37,9 @@ const Auth = () => {
                   报名
                 </TabsTrigger>
               </TabsList>
-              <TabsContent value="登录">
+              <TabsContent value="登录" className="flex flex-col gap-5 mt-10">
                 <Input
-                  placeholder="Email"
+                  placeholder="电子邮件"
                   type="email"
                   className="rounded-full p-6"
                   value={email}
