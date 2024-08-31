@@ -17,10 +17,20 @@ const Auth = () => {
             </p>
           </div>
           <div className="flex items-center justify-center w-full">
-            <Tabs>
-              <TabsList>
-                <TabsTrigger value="登录">登录</TabsTrigger>
-                <TabsTrigger value="报名">报名</TabsTrigger>
+            <Tabs className="w-3/4">
+              <TabsList className="bg-transparent rounded-none w-full">
+                <TabsTrigger
+                  value="登录"
+                  className="data-[state=active]:bg-transparent text-black text-opacity-90 border-b-2 rounded-none w-full data-[state=active]:text-black data-[state=active]:font-semibold data-[state=active]:border-b-purple-500 p-3 transition-all duration-500"
+                >
+                  登录
+                </TabsTrigger>
+                <TabsTrigger
+                  value="报名"
+                  className="data-[state=active]:bg-transparent text-black text-opacity-90 border-b-2 rounded-none w-full data-[state=active]:text-black data-[state=active]:font-semibold data-[state=active]:border-b-purple-500 p-3 transition-all duration-500"
+                >
+                  报名
+                </TabsTrigger>
               </TabsList>
               <TabsContent value="登录"></TabsContent>
               <TabsContent value="报名 "></TabsContent>
