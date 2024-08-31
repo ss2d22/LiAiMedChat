@@ -1,4 +1,5 @@
 import { books } from "@/assets";
+import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useState } from "react";
 
@@ -36,7 +37,15 @@ const Auth = () => {
                   报名
                 </TabsTrigger>
               </TabsList>
-              <TabsContent value="登录"></TabsContent>
+              <TabsContent value="登录">
+                <Input
+                  placeholder="Email"
+                  type="email"
+                  className="rounded-full p-6"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </TabsContent>
               <TabsContent value="报名 "></TabsContent>
             </Tabs>
           </div>
