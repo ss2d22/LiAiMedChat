@@ -10,7 +10,12 @@ const Auth = () => {
               <h1 className="text-5xl font-bold md:text-6xl">欢迎</h1>
               <img src={books} alt="books icon" className="w-[100px]" />
             </div>
+            <p className="font-medium text-center">
+              请填写您的详细信息，以访问 Li Med Ai
+              平台。(仅限××大学医学专业学生）
+            </p>
           </div>
+          
         </div>
       </div>
     </div>
