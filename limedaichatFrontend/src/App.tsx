@@ -1,6 +1,5 @@
-import './App.css'
+import "./App.css";
 import { Button } from "@/components/ui/button";
-
 
 const App = () => {
   return (
@@ -8,6 +7,6 @@ const App = () => {
       <Button>Click me</Button>
     </>
   );
-}
+};
 
-export default App
+export default App;
