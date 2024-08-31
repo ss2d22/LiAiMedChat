@@ -1,4 +1,5 @@
 import { books } from "@/assets";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const Auth = () => {
   return (
@@ -15,7 +16,16 @@ const Auth = () => {
               平台。(仅限××大学医学专业学生）
             </p>
           </div>
-          
+          <div className="flex items-center justify-center w-full">
+            <Tabs>
+              <TabsList>
+                <TabsTrigger value="登录">登录</TabsTrigger>
+                <TabsTrigger value="报名">报名</TabsTrigger>
+              </TabsList>
+              <TabsContent value="登录"></TabsContent>
+              <TabsContent value="报名 "></TabsContent>
+            </Tabs>
+          </div>
         </div>
       </div>
     </div>
