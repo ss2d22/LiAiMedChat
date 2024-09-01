@@ -1,4 +1,4 @@
-import { books } from "@/assets";
+import { books, tigerWelcome } from "@/assets";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useState } from "react";
@@ -94,7 +94,9 @@ const Auth = () => {
             </Tabs>
           </div>
         </div>
-        
+        <div className="hidden xl:flex justify-center items-center">
+          <img src={tigerWelcome} alt="中国新年虎踞龙盘，举手欢迎用户" />
+        </div>
       </div>
     </div>
   );
