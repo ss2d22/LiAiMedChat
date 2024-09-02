@@ -94,9 +94,9 @@ const Auth = () => {
             </Tabs>
           </div>
         </div>
-        <div className="hidden xl:flex justify-center items-center">
+        <aside className="hidden xl:flex justify-center items-center">
           <img src={tigerWelcome} alt="中国新年虎踞龙盘，举手欢迎用户" />
-        </div>
+        </aside>
       </div>
     </section>
   );
