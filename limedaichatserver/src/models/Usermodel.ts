@@ -38,3 +38,7 @@ userSchema.pre("save", async function (next) {
   this.password = await hash(this.password, salt);
   next();
 });
+
+const User = mongoose.model("用户", userSchema);
+
+export default User;
