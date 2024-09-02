@@ -23,6 +23,8 @@ app.use(
 
 app.use(cookieParser());
 
+app.use(express.json());
+
 //hello world example
 app.get("/", (request: Request, response: Response) => {
   response.status(200).send("Hello World");
