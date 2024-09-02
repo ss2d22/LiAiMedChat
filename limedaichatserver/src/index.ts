@@ -12,6 +12,15 @@ const app = express();
 const PORT = process.env.PORT;
 const MONGO_URI = process.env.MONGODB_URI || "";
 
+//setup middleware to allow our frontend to make requests and communicate with our backend
+app.use(
+  cors({
+    origin: [process.env.FRONT_ORIGIN || ""],
+    methods: ["GET", "POST", "PATCH", "DELETE", "PUT "],
+    credentials: true,
+  })
+);
+
 //hello world example
 app.get("/", (request: Request, response: Response) => {
   response.status(200).send("Hello World");
