@@ -21,6 +21,8 @@ app.use(
   })
 );
 
+app.use(cookieParser());
+
 //hello world example
 app.get("/", (request: Request, response: Response) => {
   response.status(200).send("Hello World");
