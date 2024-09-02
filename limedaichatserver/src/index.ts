@@ -10,7 +10,7 @@ const app = express();
 
 //setup port
 const PORT = process.env.PORT;
-const MONGO_URI = process.env.MONGODB_URI;
+const MONGO_URI = process.env.MONGODB_URI || "";
 
 //hello world example
 app.get("/", (request: Request, response: Response) => {
@@ -24,4 +24,13 @@ app
   .on("error", (error) => {
     // gracefully handle the error
     throw new Error(error.message);
+  });
+
+mongoose
+  .connect(MONGO_URI)
+  .then(() => {
+    console.log("Connected to MongoDB");
+  })
+  .catch((error) => {
+    console.error(error);
   });
