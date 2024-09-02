@@ -1,0 +1,24 @@
+{
+  "name": "limedaichatserver",
+  "version": "1.0.0",
+  "description": "server for the limedaichat application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ss2d22/LiAiMedChat.git"
+  },
+  "keywords": [
+    "server",
+    "ai",
+    "express"
+  ],
+  "author": "Sriram Sundar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ss2d22/LiAiMedChat/issues"
+  },
+  "homepage": "https://github.com/ss2d22/LiAiMedChat#readme"
+}
