@@ -6,16 +6,35 @@ import mongoose from "mongoose";
 
 // setup server
 dotenv.config();
-const app = express();
+/**
+ * app is an instance of express that we will use to setup our server and routes
+ * @author Sriram Sundar
+ *
+ * @type {express.Application}
+ */
+const app: express.Application = express();
 
 //setup port
-const PORT = process.env.PORT;
-const MONGO_URI = process.env.MONGODB_URI || "";
+/**
+ * port the server will run on
+ * @author Sriram Sundar
+ *
+ * @type {string | number}
+ */
+const PORT: string | number = process.env.PORT as string;
 
-//setup middleware to allow our frontend to make requests and communicate with our backend
+/**
+ * URI of mongodb database to connect to
+ * @author Sriram Sundar
+ *
+ * @type {string}
+ */
+const MONGO_URI: string = process.env.MONGODB_URI as string;
+
+//setup middleware to allow our frontend to make requests and communicate with our backend and other middlewares
 app.use(
   cors({
-    origin: [process.env.FRONT_ORIGIN || ""],
+    origin: [process.env.FRONT_ORIGIN as string],
     methods: ["GET", "POST", "PATCH", "DELETE", "PUT "],
     credentials: true,
   })
@@ -25,10 +44,13 @@ app.use(cookieParser());
 
 app.use(express.json());
 
-//hello world example
+//hello world example on / route
 app.get("/", (request: Request, response: Response) => {
   response.status(200).send("Hello World");
 });
+
+
+//start server and connect to mongodb
 
 app
   .listen(PORT, () => {

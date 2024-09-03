@@ -1,6 +1,14 @@
-import mongoose from "mongoose";
+import mongoose, { CallbackError } from "mongoose";
 import { genSalt, hash } from "bcrypt";
-const userSchema = new mongoose.Schema({
+import { IUserSchema } from "@/types";
+
+/**
+ * defines the user schema for the mongoDb database
+ * @author Sriram Sundar
+ *
+ * @type {mongoose.Schema}
+ */
+const userSchema: mongoose.Schema = new mongoose.Schema({
   email: {
     type: String,
     required: [true, "需要电子邮件"],
@@ -33,12 +41,32 @@ const userSchema = new mongoose.Schema({
 });
 
 //TODO: make it more securre
-userSchema.pre("save", async function (next) {
-  const salt = await genSalt();
-  this.password = await hash(this.password, salt);
-  next();
+userSchema.pre<IUserSchema>("save", async function (next) {
+  try {
+    const salt = await genSalt(10);
+    this.password = await hash(this.password as string, salt);
+    next();
+  } catch (error) {
+    next(error as CallbackError); // Handle errors
+  }
 });
 
-const User = mongoose.model("用户", userSchema);
+/**
+ * defines the user model for the mongoDb database
+ * @author Sriram Sundar
+ *
+ * @type {mongoose.Model<IUser>}
+ */
+const User: mongoose.Model<IUserSchema> = mongoose.model<IUserSchema>(
+  "用户",
+  userSchema
+);
+
+// Exclude password from query results
+userSchema.methods.toJSON = function () {
+  const obj = this.toObject();
+  delete obj.password;
+  return obj;
+};
 
 export default User;
