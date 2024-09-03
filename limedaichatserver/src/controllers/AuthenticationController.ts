@@ -20,9 +20,9 @@ const expiry: number = 260000000;
  *
  * @param {Email} email
  * @param {ID} id
- * @returns {*}
+ * @returns {string} jwt
  */
-const createJWT = (email: Email, id: ID) => {
+const createJWT = (email: Email, id: ID): string => {
   return sign({ email, id }, process.env.JWT_ENCRYPTION_KEY as Secret, {
     expiresIn: expiry,
   });
@@ -35,9 +35,12 @@ const createJWT = (email: Email, id: ID) => {
  * @async
  * @param {Request} request
  * @param {Response} response
- * @returns {unknown}
+ * @returns {Promise<Response>} response with user object in response body and jwt token in cookie if user is succesfully created, 500 status code if any error occurs while creating user or setting cookie, 400 status code if email or password is not provided in request body
  */
-export const signUp = async (request: Request, response: Response) => {
+export const signUp = async (
+  request: Request,
+  response: Response
+): Promise<Response> => {
   try {
     const { email, password } = request.body;
     if (!email || !password) {
