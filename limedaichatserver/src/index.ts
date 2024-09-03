@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import mongoose from "mongoose";
+import authenticationRoutes from "@/routes/AuthenticationRoutes";
 
 // setup server
 dotenv.config();
@@ -44,11 +45,13 @@ app.use(cookieParser());
 
 app.use(express.json());
 
+//add routes
+app.use("/api/authentication", authenticationRoutes);
+
 //hello world example on / route
 app.get("/", (request: Request, response: Response) => {
   response.status(200).send("Hello World");
 });
-
 
 //start server and connect to mongodb
 
