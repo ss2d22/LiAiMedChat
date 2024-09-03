@@ -1,6 +1,12 @@
 import mongoose from "mongoose";
 import { genSalt, hash } from "bcrypt";
-const userSchema = new mongoose.Schema({
+/**
+ * defines the user schema for the mongoDb database
+ * @author Sriram Sundar
+ *
+ * @type {mongoose.Schema}
+ */
+const userSchema: mongoose.Schema = new mongoose.Schema({
   email: {
     type: String,
     required: [true, "需要电子邮件"],
@@ -35,10 +41,17 @@ const userSchema = new mongoose.Schema({
 //TODO: make it more securre
 userSchema.pre("save", async function (next) {
   const salt = await genSalt();
-  this.password = await hash(this.password, salt);
+  this.password = await hash(this.password as string, salt);
   next();
 });
 
-const User = mongoose.model("用户", userSchema);
+/**
+ * defines the user model for the mongoDb database
+ * @author Sriram Sundar
+ *
+ * @type {*}
+ */
+const User: mongoose.Model<mongoose.Document> =
+  mongoose.model<mongoose.Document>("用户", userSchema);
 
 export default User;
