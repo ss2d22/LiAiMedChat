@@ -46,7 +46,7 @@ app.use(cookieParser());
 app.use(express.json());
 
 //add routes
-app.use("/authentication", authenticationRoutes);
+app.use("/api/authentication", authenticationRoutes);
 
 //hello world example on / route
 app.get("/", (request: Request, response: Response) => {
