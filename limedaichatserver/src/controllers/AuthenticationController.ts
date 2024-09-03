@@ -6,14 +6,37 @@ import { Request, Email, ID } from "@/types";
 
 dotenv.config();
 
+/**
+ * expiry time for jwt token in milliseconds
+ * @author Sriram Sundar
+ *
+ * @type {number}
+ */
 const expiry: number = 260000000;
 
+/**
+ * create a jwt token for the user with email and id as payload with expiry time of const above
+ * @author Sriram Sundar
+ *
+ * @param {Email} email
+ * @param {ID} id
+ * @returns {*}
+ */
 const createJWT = (email: Email, id: ID) => {
   return sign({ email, id }, process.env.JWT_ENCRYPTION_KEY as Secret, {
     expiresIn: expiry,
   });
 };
 
+/**
+ * Handles sign up of a user with email and , throws error if email or password is not provided, creates a user with email and password and returns the user with jwt token in cookie and user object in response body, throws error if any error occurs while creating user or setting cookie, returns 500 status code if any error occurs while creating user or setting cookie, returns 400 status code if email or password is not provided in request body, returns 201 status code if user is created successfully and jwt token is set in cookie and user object is returned in response body with user id, email and configuredProfile, throws error if any error occurs while creating user or setting cookie, returns 500 status code if any error occurs while creating user or setting cookie, returns 400 status code if email or password is not provided in request body, returns 201 status code if user is created successfully and jwt token is set in cookie and user object is returned in response body with user id, email and configuredProfile
+ * @author Sriram Sundar
+ *
+ * @async
+ * @param {Request} request
+ * @param {Response} response
+ * @returns {unknown}
+ */
 export const signUp = async (request: Request, response: Response) => {
   try {
     const { email, password } = request.body;
