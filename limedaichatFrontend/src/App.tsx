@@ -2,7 +2,12 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Auth from "@/pages/authentication";
 import Chat from "@/pages/chat";
 
-const App = () => {
+/**
+ * App component that wraps the entire application and defines routes for the application
+ * @author Sriram Sundar
+ */
+
+const App : React.FC = () => {
   return (
     <BrowserRouter>
       <Routes>
