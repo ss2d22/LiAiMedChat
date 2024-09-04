@@ -7,6 +7,12 @@ import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import { api } from "@/state/api";
 
+/**
+ * store to be used in the frontend using react redux
+ * @author Sriram Sundar
+ *
+ * @type {*}
+ */
 export const store = configureStore({
   reducer: {
     [api.reducerPath]: api.reducer,
