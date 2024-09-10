@@ -14,7 +14,7 @@ const Auth: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
-  const { data, error, isUninitialized, isLoading, isSuccess, isError, reset } =
+  const { isUninitialized, isLoading, isSuccess, isError, reset } =
     usePostSignUpMutation();
   const [trigger] = usePostSignUpMutation();
 
@@ -38,12 +38,12 @@ const Auth: React.FC = () => {
     alert("Sign in clicked");
   };
 
-  const handleSignUp = async () => {
+  const handleSignUp = async (): Promise<void> => {
     if (validateSignUp()) {
       const result = await trigger({ email, password });
       console.log(result);
-      console.log(data);
     }
+    return Promise.resolve();
   };
   return (
     <section className="h-[100vh] w-[100vw] flex items-center justify-center">

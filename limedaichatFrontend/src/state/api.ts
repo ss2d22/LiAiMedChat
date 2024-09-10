@@ -9,7 +9,10 @@ import { BACKEND_URL, SIGNUP_ROUTE } from "@/constants";
  * @type {*}
  */
 export const api = createApi({
-  baseQuery: fetchBaseQuery({ baseUrl: BACKEND_URL as string }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: BACKEND_URL as string,
+    credentials: "include",
+  }),
   reducerPath: "main",
   tagTypes: [],
   endpoints: (build) => ({
