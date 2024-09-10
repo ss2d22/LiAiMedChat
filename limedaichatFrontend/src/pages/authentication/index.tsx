@@ -3,6 +3,8 @@ import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
+import { usePostSignUpMutation } from "@/state/api";
 
 /**
  * Authentication component that allows users to sign in or sign up
@@ -12,13 +14,36 @@ const Auth: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
+  const { data, error, isUninitialized, isLoading, isSuccess, isError, reset } =
+    usePostSignUpMutation();
+  const [trigger] = usePostSignUpMutation();
+
+  const validateSignUp = (): boolean => {
+    if (!email.length) {
+      toast.error("需要电子邮件");
+      return false;
+    }
+    if (!password.length) {
+      toast.error("需要密码");
+      return false;
+    }
+    if (repeatPassword !== password) {
+      toast.error("密码不匹配");
+      return false;
+    }
+    return true;
+  };
 
   const handleSignIn = () => {
     alert("Sign in clicked");
   };
 
-  const handleSignUp = () => {
-    alert("Sign up clicked");
+  const handleSignUp = async () => {
+    if (validateSignUp()) {
+      const result = await trigger({ email, password });
+      console.log(result);
+      console.log(data);
+    }
   };
   return (
     <section className="h-[100vh] w-[100vw] flex items-center justify-center">
