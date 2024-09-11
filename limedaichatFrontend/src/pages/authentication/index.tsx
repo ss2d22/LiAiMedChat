@@ -4,7 +4,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { usePostSignInMutation, usePostSignUpMutation } from "@/state/api";
+import { usePostSignInMutation, usePostSignUpMutation } from "@/state/api/authenticationApi.ts";
 
 /**
  * Authentication component that allows users to sign in or sign up

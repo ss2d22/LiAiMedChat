@@ -8,7 +8,7 @@ import { BACKEND_URL, SIGNIN_ROUTE, SIGNUP_ROUTE } from "@/constants";
  *
  * @type {*}
  */
-export const api = createApi({
+export const authenticationApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: BACKEND_URL,
     credentials: "include",
@@ -39,4 +39,4 @@ export const api = createApi({
  *
  * @type {*}
  */
-export const { usePostSignUpMutation, usePostSignInMutation } = api;
+export const { usePostSignUpMutation, usePostSignInMutation } = authenticationApi;
