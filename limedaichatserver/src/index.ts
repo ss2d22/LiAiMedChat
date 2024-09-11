@@ -4,6 +4,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import mongoose from "mongoose";
 import authenticationRoutes from "@/routes/AuthenticationRoutes";
+import morgan from "morgan";
 
 // setup server
 dotenv.config();
@@ -44,6 +45,8 @@ app.use(
 app.use(cookieParser());
 
 app.use(express.json());
+
+app.use(morgan("combined"));
 
 //add routes
 app.use("/api/authentication", authenticationRoutes);

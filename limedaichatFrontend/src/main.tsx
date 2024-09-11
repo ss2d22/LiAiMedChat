@@ -6,6 +6,7 @@ import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import { api } from "@/state/api";
+import { Toaster } from "@/components/ui/sonner";
 
 /**
  * store to be used in the frontend using react redux
@@ -27,6 +28,7 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Provider store={store}>
       <App />
+      <Toaster closeButton />
     </Provider>
   </StrictMode>
 );
