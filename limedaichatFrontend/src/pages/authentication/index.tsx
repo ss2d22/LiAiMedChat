@@ -4,16 +4,26 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { usePostSignInMutation, usePostSignUpMutation } from "@/state/api/authenticationApi.ts";
+import {
+  usePostSignInMutation,
+  usePostSignUpMutation,
+} from "@/state/api/authenticationApi.ts";
+import { useDispatch } from "react-redux";
+import { setUserInfo } from "@/state/slices/authSlice";
+import { AppDispatch, AuthApiResponse } from "@/types";
+import { useNavigate } from "react-router-dom";
 
 /**
  * Authentication component that allows users to sign in or sign up
  * @author Sriram Sundar
  */
 const Auth: React.FC = () => {
+  const navigator = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
+  const dispatch: AppDispatch = useDispatch();
+
   // const { isUninitialized, isLoading, isSuccess, isError, reset } =
   //   usePostSignUpMutation();
   const [triggerSignUp] = usePostSignUpMutation();
@@ -49,7 +59,21 @@ const Auth: React.FC = () => {
   const handleSignIn = async () => {
     try {
       if (validateSignIn()) {
-        const result = await triggerSignIn({ email, password });
+        const result = (await triggerSignIn({
+          email,
+          password,
+        })) as AuthApiResponse;
+        if ("data" in result && result.data.user.id) {
+          dispatch(setUserInfo(result.data.user));
+          if (result.data.user.configuredProfile) {
+            navigator("/userprofile");
+          } else {
+            navigator("/");
+          }
+        } else if ("error" in result) {
+          console.error(result.error);
+        }
+
         console.log(result);
       }
     } catch (error) {
@@ -60,7 +84,18 @@ const Auth: React.FC = () => {
   const handleSignUp = async () => {
     try {
       if (validateSignUp()) {
-        const result = await triggerSignUp({ email, password });
+        const result = (await triggerSignUp({
+          email,
+          password,
+        })) as AuthApiResponse;
+        if ("data" in result && result.data.user.id) {
+          dispatch(setUserInfo(result.data.user));
+          if (result.data.user.id) {
+            navigator("/userprofile");
+          }
+        } else if ("error" in result) {
+          console.error(result.error);
+        }
         console.log(result);
       }
     } catch (error) {
