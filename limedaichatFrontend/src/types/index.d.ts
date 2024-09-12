@@ -1,5 +1,27 @@
 import { authenticationApi } from "@/state/api/authenticationApi";
+import { store } from "@/state/store";
+import { SerializedError } from "@reduxjs/toolkit";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 // Types will be defined here
+
+//api error Types
+
+/**
+ * Error response structure for the api endpoints from the LiMedAi Server
+ * @author Sriram Sundar
+ *
+ * @interface ErrorResponse
+ * @typedef {ErrorResponse}
+ */
+declare interface ErrorResponse {
+  /**
+   * Error message from the server as per react redux toolkit query
+   * @author Sriram Sundar
+   *
+   * @type {(FetchBaseQueryError | SerializedError)}
+   */
+  error: FetchBaseQueryError | SerializedError;
+}
 
 //type for authApi related stuff
 
@@ -110,25 +132,35 @@ declare interface SignInPayload {
  * @interface AuthResponse
  * @typedef {AuthResponse}
  */
+
 declare interface AuthResponse {
+  /**
+   * status code from the server response as per react redux toolkit query
+   * @author Sriram Sundar
+   *
+   * @type {number}
+   */
+  status: number;
   /**
    * User object with id and email
    * @author Sriram Sundar
    *
    * @type {{
-   *   user: {
-   *     id: string;
-   *     email: string;
-   *   }
+   *   user: UserInformation;
    * }}
    */
   data: {
-    user: {
-      id: string;
-      email: string;
-    };
+    user: UserInformation;
   };
 }
+
+/**
+ * AuthApiResponse type for the response from the auth api endpoints from the LiMedAi Server
+ * @author Sriram Sundar
+ *
+ * @typedef {AuthApiResponse}
+ */
+declare type AuthApiResponse = AuthResponse | ErrorResponse;
 
 // types for state management
 /**
@@ -153,6 +185,24 @@ declare interface UserInformation {
    * @type {string}
    */
   email: string;
+
+  /**
+   * username of the user
+   * @type {string}
+   */
+  username?: string;
+
+  /**
+   * profile picture of the user
+   * @type {string}
+   */
+  avatar?: string;
+
+  /**
+   * has the user configured their profile
+   * @type {boolean}
+   */
+  configuredProfile?: boolean;
 }
 
 /**
@@ -195,3 +245,12 @@ declare interface RootState {
    */
   [authenticationApi.reducerPath]: ReturnType<typeof authenticationApi.reducer>;
 }
+
+/**
+ * AppDispatch type for the store dispatch function
+ * @author Sriram Sundar
+ *
+ * @export
+ * @typedef {AppDispatch}
+ */
+export type AppDispatch = typeof store.dispatch;
