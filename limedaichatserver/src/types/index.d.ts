@@ -7,6 +7,7 @@ declare interface Request extends e.Request {
   body: {
     email: Email;
     password: string;
+    userId: string;
   };
 }
 

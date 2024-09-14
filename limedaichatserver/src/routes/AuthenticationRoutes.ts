@@ -1,6 +1,11 @@
 import { Router } from "express";
 import dotenv from "dotenv";
-import { signIn, signUp } from "@/controllers/AuthenticationController";
+import {
+  fetchUserInfo,
+  signIn,
+  signUp,
+} from "@/controllers/AuthenticationController";
+import { veriftJWT } from "@/middlewares/AuthenticationMiddleware";
 
 dotenv.config();
 
@@ -239,5 +244,27 @@ authenticationRoutes.post("/signup", signUp);
    *             example: "Internal Server Error"
  */
 authenticationRoutes.post("/signin", signIn);
+
+/**
+ @swagger
+ 
+ /api/authentication/fetchusers
+
+  post:
+    summary: fetch user info after verifying jwt token
+    description: the jwt token in the attched cookie is verified by verifyJWT middleware and if it is not valid an error is returned
+    if the token is valid the fetchUserInfo controller handles the fetching of unser information with the appropriate responses
+
+    requestBody:
+    required: true
+
+    content:
+      application/json:
+        schema:
+          type:
+
+          tbd i shall do the documentation after i finish integrating with frontend and testing
+ */
+authenticationRoutes.post("/fetchuserinfo", veriftJWT, fetchUserInfo);
 
 export default authenticationRoutes;

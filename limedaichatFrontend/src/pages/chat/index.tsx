@@ -2,6 +2,7 @@ import { RootState } from "@/types";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 /**
  * Placeholder for the chat page
@@ -15,6 +16,7 @@ const Chat: React.FC = () => {
 
   useEffect(() => {
     if (!userInfo?.configuredProfile) {
+      toast("您需要配置个人配置文件");
       navigator("/userprofile");
     }
   }, [userInfo, navigator]);

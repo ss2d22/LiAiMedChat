@@ -130,3 +130,43 @@ export const signIn = async (
     return response.status(500).send("服务器内部错误");
   }
 };
+/**
+ * fetches user info from database (only to be used in conjunction with the jwt verification middleware)
+ * handles cases where user is not found with a status code 404, 500 for internal server error and status
+ * code 200 for user found
+ *
+ * @author Sriram Sundar
+ *
+ * @async
+ *
+ * @param {Request} request
+ * @param {Response} response
+ * @returns {Promise<Response>}
+ */
+
+export const fetchUserInfo = async (
+  request: Request,
+  response: Response
+): Promise<Response> => {
+  try {
+    const userData = await User.findById(request.body.userId);
+    if (!userData) {
+      return response.status(404).send("未找到电子邮件");
+    }
+
+    return response.status(200).json({
+      user: {
+        id: userData.id,
+        email: userData.email,
+        configuredProfile: userData.configuredProfile,
+        firstName: userData.firstName,
+        lastName: userData.lastName,
+        avatar: userData.avatar,
+        theme: userData.theme,
+      },
+    });
+  } catch (error) {
+    console.error(error);
+    return response.status(500).send("服务器内部错误");
+  }
+};

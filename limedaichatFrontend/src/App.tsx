@@ -4,7 +4,11 @@ import Chat from "@/pages/chat";
 import UserProfile from "./pages/userprofile";
 import { useSelector } from "react-redux";
 import { RootState } from "@/types";
-
+import { useDispatch } from "react-redux";
+import { setUserInfo } from "@/state/slices/authSlice";
+import { AppDispatch, AuthApiResponse } from "@/types";
+import { useEffectAsync } from "@/utils/useEffectAsync";
+import { useState } from "react";
 //TODO: fix typescript errors
 const PrivateRoute = ({ children }) => {
   const userInfo = useSelector((state: RootState) => state.auth.userInfo);
@@ -27,6 +31,27 @@ const AuthRoute = ({ children }): JSX.Element => {
  */
 
 const App: React.FC = () => {
+  const userInfo = useSelector((state: RootState) => state.auth.userInfo);
+  const dispatch: AppDispatch = useDispatch();
+  const [loading, setLoading] = useState<boolean>(true);
+
+  useEffectAsync(async () => {
+    const getUserData = async () => {
+      try {
+        const response = "tbd";
+        console.log({ response });
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    if (!userInfo) {
+      await getUserData();
+    } else {
+      setLoading(false);
+    }
+  }, [userInfo, setUserInfo]);
+
   return (
     <BrowserRouter>
       <Routes>
