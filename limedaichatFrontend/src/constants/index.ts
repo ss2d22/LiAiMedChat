@@ -5,5 +5,6 @@ export const BACKEND_URL = import.meta.env.VITE_BACKEND_BASE_URL as string;
 export const AUTHENTICATION_BASE_ROUTES = "/api/authentication";
 export const SIGNUP_ROUTE = `${AUTHENTICATION_BASE_ROUTES}/signup`;
 export const SIGNIN_ROUTE = `${AUTHENTICATION_BASE_ROUTES}/signin`;
+export const FETCH_USER_INFO_ROUTE = `${AUTHENTICATION_BASE_ROUTES}/fetchuserinfo`;
 
 //Chat Routes

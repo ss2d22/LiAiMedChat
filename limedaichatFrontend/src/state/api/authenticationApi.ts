@@ -1,5 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { BACKEND_URL, SIGNIN_ROUTE, SIGNUP_ROUTE } from "@/constants";
+import {
+  BACKEND_URL,
+  FETCH_USER_INFO_ROUTE,
+  SIGNIN_ROUTE,
+  SIGNUP_ROUTE,
+} from "@/constants";
 
 //TODO: update payload config and body to match the server after setting up state management
 /**
@@ -30,6 +35,12 @@ export const authenticationApi = createApi({
         body: payload as string,
       }),
     }),
+    getFetchUserInfo: build.query({
+      query: () => ({
+        url: FETCH_USER_INFO_ROUTE,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -39,4 +50,8 @@ export const authenticationApi = createApi({
  *
  * @type {*}
  */
-export const { usePostSignUpMutation, usePostSignInMutation } = authenticationApi;
+export const {
+  usePostSignUpMutation,
+  usePostSignInMutation,
+  useGetFetchUserInfoQuery,
+} = authenticationApi;

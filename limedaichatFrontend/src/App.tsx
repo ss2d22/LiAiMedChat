@@ -3,22 +3,22 @@ import Auth from "@/pages/authentication";
 import Chat from "@/pages/chat";
 import UserProfile from "./pages/userprofile";
 import { useSelector } from "react-redux";
-import { RootState } from "@/types";
+import { RootState, RouterProps, UserInformation } from "@/types";
 import { useDispatch } from "react-redux";
 import { setUserInfo } from "@/state/slices/authSlice";
 import { AppDispatch, AuthApiResponse } from "@/types";
 import { useEffectAsync } from "@/utils/useEffectAsync";
 import { useState } from "react";
-//TODO: fix typescript errors
-const PrivateRoute = ({ children }) => {
+import { useGetFetchUserInfoQuery } from "./state/api/authenticationApi";
+
+const PrivateRoute: React.FC<RouterProps> = ({ children }: RouterProps) => {
   const userInfo = useSelector((state: RootState) => state.auth.userInfo);
   const isAuth = !!userInfo;
 
   return isAuth ? children : <Navigate to="/authentication" />;
 };
 
-//fix typescript errors
-const AuthRoute = ({ children }): JSX.Element => {
+const AuthRoute: React.FC<RouterProps> = ({ children }: RouterProps) => {
   const userInfo = useSelector((state: RootState) => state.auth.userInfo);
   const isAuth = !!userInfo;
 
@@ -34,17 +34,25 @@ const App: React.FC = () => {
   const userInfo = useSelector((state: RootState) => state.auth.userInfo);
   const dispatch: AppDispatch = useDispatch();
   const [loading, setLoading] = useState<boolean>(true);
+  const { data, error, isLoading, refetch } = useGetFetchUserInfoQuery({});
 
   useEffectAsync(async () => {
     const getUserData = async () => {
       try {
-        const response = "tbd";
-        console.log({ response });
+        const result = await refetch();
+        console.log({ result });
+        if (result.data && result.isSuccess) {
+          dispatch(setUserInfo(result.data.user as UserInformation));
+        } else {
+          dispatch(setUserInfo(undefined));
+        }
       } catch (error) {
         console.error(error);
+        dispatch(setUserInfo(undefined));
+      } finally {
+        setLoading(false);
       }
     };
-
     if (!userInfo) {
       await getUserData();
     } else {
@@ -52,6 +60,13 @@ const App: React.FC = () => {
     }
   }, [userInfo, setUserInfo]);
 
+  if (loading || isLoading) {
+    return (
+      <>
+        <h1>加载中...</h1>
+      </>
+    );
+  }
   return (
     <BrowserRouter>
       <Routes>

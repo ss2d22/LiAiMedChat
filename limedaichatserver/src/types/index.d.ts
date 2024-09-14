@@ -1,4 +1,5 @@
 import e from "express";
+import { JwtPayload } from "jsonwebtoken";
 
 declare type Email = string;
 declare type ID = string;
@@ -20,4 +21,8 @@ declare interface IUserSchema extends Document {
   avatar?: string;
   theme?: number;
   configuredProfile: boolean;
+}
+
+declare interface JwtPayload extends JwtPayload {
+  id: string;
 }

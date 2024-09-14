@@ -5,7 +5,7 @@ import {
   signIn,
   signUp,
 } from "@/controllers/AuthenticationController";
-import { veriftJWT } from "@/middlewares/AuthenticationMiddleware";
+import { verifyJWT } from "@/middlewares/AuthenticationMiddleware";
 
 dotenv.config();
 
@@ -265,6 +265,6 @@ authenticationRoutes.post("/signin", signIn);
 
           tbd i shall do the documentation after i finish integrating with frontend and testing
  */
-authenticationRoutes.post("/fetchuserinfo", veriftJWT, fetchUserInfo);
+authenticationRoutes.get("/fetchuserinfo", verifyJWT, fetchUserInfo);
 
 export default authenticationRoutes;
