@@ -246,24 +246,74 @@ authenticationRoutes.post("/signup", signUp);
 authenticationRoutes.post("/signin", signIn);
 
 /**
- @swagger
- 
- /api/authentication/fetchusers
-
-  post:
-    summary: fetch user info after verifying jwt token
-    description: the jwt token in the attched cookie is verified by verifyJWT middleware and if it is not valid an error is returned
-    if the token is valid the fetchUserInfo controller handles the fetching of unser information with the appropriate responses
-
-    requestBody:
-    required: true
-
-    content:
-      application/json:
-        schema:
-          type:
-
-          tbd i shall do the documentation after i finish integrating with frontend and testing
+ * @swagger
+ * /api/authentication/fetchuserinfo:
+ *   get:
+ *     summary: Fetch user info after verifying JWT token
+ *     description: The JWT token in the attached cookie is verified by verifyJWT middleware.
+ *     If it is not valid, an error is returned. If the token is valid, the fetchUserInfo controller handles the
+ *     fetching of user information with the appropriate responses using the userid from the cookie.
+ *
+ *     responses:
+ *       200:
+ *         description: Successfully fetched user information
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 user:
+ *                   type: object
+ *                   properties:
+ *                     id:
+ *                       type: string
+ *                       example: "60d0fe4f5311236168a109ca"
+ *                     email:
+ *                       type: string
+ *                       example: "user@example.com"
+ *                     configuredProfile:
+ *                       type: boolean
+ *                       example: true
+ *                     firstName:
+ *                       type: string
+ *                       example: "John"
+ *                     lastName:
+ *                       type: string
+ *                       example: "Doe"
+ *                     avatar:
+ *                       type: string
+ *                       example: "https://example.com/avatar.jpg"
+ *                     theme:
+ *                       type: string
+ *                       example: "dark"
+ *       401:
+ *         description: Unauthorized, JWT token is missing or invalid
+ *         content:
+ *           text/plain:
+ *             schema:
+ *               type: string
+ *               example: "您未通过身份验证"
+ *       403:
+ *         description: Forbidden, JWT token is invalid
+ *         content:
+ *           text/plain:
+ *             schema:
+ *               type: string
+ *               example: "无效的令牌"
+ *       404:
+ *         description: User not found
+ *         content:
+ *           text/plain:
+ *             schema:
+ *               type: string
+ *               example: "未找到电子邮件"
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           text/plain:
+ *             schema:
+ *               type: string
+ *               example: "服务器内部错误"
  */
 authenticationRoutes.get("/fetchuserinfo", verifyJWT, fetchUserInfo);
 

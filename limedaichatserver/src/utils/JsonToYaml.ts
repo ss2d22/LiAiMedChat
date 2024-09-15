@@ -3,14 +3,45 @@ import path from "path";
 import yaml from "js-yaml";
 
 // Defne file paths
-const jsonFilePath = path.join(__dirname, "../docs/openapi.json");
-const yamlFilePath = path.join(__dirname, "../docs/openapi.yml");
+/**
+ * Path to the JSON file containing the OpenAPI specification.
+ * @author Sriram Sundar
+ *
+ * @type {String}
+ */
+const jsonFilePath: string = path.join(__dirname, "../docs/openapi.json");
 
-const jsonSpec = fs.readFileSync(jsonFilePath, "utf-8");
+/**
+ * Path to the YAML file where the converted OpenAPI specification will be saved.
+ * @author Sriram Sundar
+ *
+ * @type {String}
+ */
+const yamlFilePath: string = path.join(__dirname, "../docs/openapi.yml");
 
-const jsonObject = JSON.parse(jsonSpec);
+/**
+ * The content of the JSON file as a string.
+ * @author Sriram Sundar
+ *
+ * @type {String}
+ */
+const jsonSpec: string = fs.readFileSync(jsonFilePath, "utf-8");
 
-const yamlSpec = yaml.dump(jsonObject);
+/**
+ * The JSON object parsed from the JSON file content.
+ * @author Sriram Sundar
+ *
+ * @type {object}
+ */
+const jsonObject: object = JSON.parse(jsonSpec);
+
+/**
+ * The YAML string generated from the JSON object.
+ * @author Sriram Sundar
+ *
+ * @type {string}
+ */
+const yamlSpec: string = yaml.dump(jsonObject);
 
 fs.writeFileSync(yamlFilePath, yamlSpec);
 

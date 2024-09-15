@@ -256,6 +256,20 @@ declare interface RootState {
  */
 export type AppDispatch = typeof store.dispatch;
 
+/**
+ * RouterProps for AuthRoute nd Private route functions
+ * @author Sriram Sundar
+ *
+ * @export
+ * @interface RouterProps
+ * @typedef {RouterProps}
+ */
 export interface RouterProps {
+  /**
+   * children passed in to be rendered if conditions are met
+   * @author Sriram Sundar
+   *
+   * @type {ReactNode}
+   */
   children: ReactNode;
 }

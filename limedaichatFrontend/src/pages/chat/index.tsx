@@ -16,7 +16,7 @@ const Chat: React.FC = () => {
 
   useEffect(() => {
     if (!userInfo?.configuredProfile) {
-      toast("您需要配置个人配置文件");
+      toast.error("您需要配置个人配置文件");
       navigator("/userprofile");
     }
   }, [userInfo, navigator]);

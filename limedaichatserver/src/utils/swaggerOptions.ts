@@ -5,6 +5,13 @@ import fs from "fs";
 
 dotenv.config();
 
+/**
+ * Swagger configuration options for generating API documentation.
+ * This includes the OpenAPI definition and the paths to the API routes.
+ * @author Sriram Sundar
+ *
+ * @type {swaggerJsDoc.Options}
+ */
 const swaggerOptions: swaggerJsDoc.Options = {
   definition: {
     openapi: "3.0.0",
@@ -25,11 +32,23 @@ const swaggerOptions: swaggerJsDoc.Options = {
   apis: ["./src/routes/**/*.ts"],
 };
 
-const specs = swaggerJsDoc(swaggerOptions);
+/**
+ * The generated OpenAPI specification based on the swagger options.
+ * @author Sriram Sundar
+ *
+ * @type {object}
+ */
+const specs: object = swaggerJsDoc(swaggerOptions);
 
 console.log("Swagger Options:", swaggerOptions);
 
-const jsonOutputPath = path.join(__dirname, "../docs/openapi.json");
+/**
+ * The path where the generated OpenAPI JSON specification will be saved.
+ * @author Sriram Sundar
+ *
+ * @type {string}
+ */
+const jsonOutputPath: string = path.join(__dirname, "../docs/openapi.json");
 fs.writeFileSync(jsonOutputPath, JSON.stringify(specs, null, 2));
 
 console.log(

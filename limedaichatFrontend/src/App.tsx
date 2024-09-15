@@ -11,6 +11,14 @@ import { useEffectAsync } from "@/utils/useEffectAsync";
 import { useState } from "react";
 import { useGetFetchUserInfoQuery } from "./state/api/authenticationApi";
 
+/**
+ * hides the children if the user is not authenticated and redirects to the authentication page
+ * @author Sriram Sundar
+ *
+ * @param {RouterProps} param0
+ * @param {RouterProps} param0.children
+ * @returns {*}
+ */
 const PrivateRoute: React.FC<RouterProps> = ({ children }: RouterProps) => {
   const userInfo = useSelector((state: RootState) => state.auth.userInfo);
   const isAuth = !!userInfo;
@@ -18,6 +26,14 @@ const PrivateRoute: React.FC<RouterProps> = ({ children }: RouterProps) => {
   return isAuth ? children : <Navigate to="/authentication" />;
 };
 
+/**
+ * if authenticated redirects to the chat page else shows the children which is the authentication page
+ * @author Sriram Sundar
+ *
+ * @param {RouterProps} param0
+ * @param {RouterProps} param0.children
+ * @returns {*}
+ */
 const AuthRoute: React.FC<RouterProps> = ({ children }: RouterProps) => {
   const userInfo = useSelector((state: RootState) => state.auth.userInfo);
   const isAuth = !!userInfo;
@@ -78,7 +94,6 @@ const App: React.FC = () => {
             </AuthRoute>
           }
         />
-        {/* TODO: wrap chat and any future routes that needs to be protected in suspense after the Auth is setup */}
         <Route
           path="/chat"
           element={
