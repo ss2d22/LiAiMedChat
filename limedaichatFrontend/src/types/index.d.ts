@@ -2,6 +2,7 @@ import { authenticationApi } from "@/state/api/authenticationApi";
 import { store } from "@/state/store";
 import { SerializedError } from "@reduxjs/toolkit";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import { ReactNode } from "react";
 // Types will be defined here
 
 //api error Types
@@ -254,3 +255,21 @@ declare interface RootState {
  * @typedef {AppDispatch}
  */
 export type AppDispatch = typeof store.dispatch;
+
+/**
+ * RouterProps for AuthRoute nd Private route functions
+ * @author Sriram Sundar
+ *
+ * @export
+ * @interface RouterProps
+ * @typedef {RouterProps}
+ */
+export interface RouterProps {
+  /**
+   * children passed in to be rendered if conditions are met
+   * @author Sriram Sundar
+   *
+   * @type {ReactNode}
+   */
+  children: ReactNode;
+}

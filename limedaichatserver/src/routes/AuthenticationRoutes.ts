@@ -1,6 +1,11 @@
 import { Router } from "express";
 import dotenv from "dotenv";
-import { signIn, signUp } from "@/controllers/AuthenticationController";
+import {
+  fetchUserInfo,
+  signIn,
+  signUp,
+} from "@/controllers/AuthenticationController";
+import { verifyJWT } from "@/middlewares/AuthenticationMiddleware";
 
 dotenv.config();
 
@@ -239,5 +244,77 @@ authenticationRoutes.post("/signup", signUp);
    *             example: "Internal Server Error"
  */
 authenticationRoutes.post("/signin", signIn);
+
+/**
+ * @swagger
+ * /api/authentication/fetchuserinfo:
+ *   get:
+ *     summary: Fetch user info after verifying JWT token
+ *     description: >
+ *       The JWT token in the attached cookie is verified by verifyJWT middleware.
+ *       If it is not valid, an error is returned. If the token is valid, the fetchUserInfo
+ *       controller handles the fetching of user information with the appropriate responses.
+ *     responses:
+ *       200:
+ *         description: Successfully fetched user information
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 user:
+ *                   type: object
+ *                   properties:
+ *                     id:
+ *                       type: string
+ *                       example: "60d0fe4f5311236168a109ca"
+ *                     email:
+ *                       type: string
+ *                       example: "user@example.com"
+ *                     configuredProfile:
+ *                       type: boolean
+ *                       example: true
+ *                     firstName:
+ *                       type: string
+ *                       example: "John"
+ *                     lastName:
+ *                       type: string
+ *                       example: "Doe"
+ *                     avatar:
+ *                       type: string
+ *                       example: "https://example.com/avatar.jpg"
+ *                     theme:
+ *                       type: string
+ *                       example: "dark"
+ *       401:
+ *         description: Unauthorized, JWT token is missing or invalid
+ *         content:
+ *           text/plain:
+ *             schema:
+ *               type: string
+ *               example: "您未通过身份验证"
+ *       403:
+ *         description: Forbidden, JWT token is invalid
+ *         content:
+ *           text/plain:
+ *             schema:
+ *               type: string
+ *               example: "无效的令牌"
+ *       404:
+ *         description: User not found
+ *         content:
+ *           text/plain:
+ *             schema:
+ *               type: string
+ *               example: "未找到电子邮件"
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           text/plain:
+ *             schema:
+ *               type: string
+ *               example: "服务器内部错误"
+ */
+authenticationRoutes.get("/fetchuserinfo", verifyJWT, fetchUserInfo);
 
 export default authenticationRoutes;
