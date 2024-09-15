@@ -250,10 +250,10 @@ authenticationRoutes.post("/signin", signIn);
  * /api/authentication/fetchuserinfo:
  *   get:
  *     summary: Fetch user info after verifying JWT token
- *     description: The JWT token in the attached cookie is verified by verifyJWT middleware.
- *     If it is not valid, an error is returned. If the token is valid, the fetchUserInfo controller handles the
- *     fetching of user information with the appropriate responses using the userid from the cookie.
- *
+ *     description: >
+ *       The JWT token in the attached cookie is verified by verifyJWT middleware.
+ *       If it is not valid, an error is returned. If the token is valid, the fetchUserInfo
+ *       controller handles the fetching of user information with the appropriate responses.
  *     responses:
  *       200:
  *         description: Successfully fetched user information
