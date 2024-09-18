@@ -3,7 +3,7 @@ import { RootState } from "@/types";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { IoArrowBack } from "react-icons/io5";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { colours, getColour } from "@/utils/colours";
 import { FaPlus, FaTrash } from "react-icons/fa";
 import { Input } from "@/components/ui/input";
@@ -68,7 +68,15 @@ const UserProfile: React.FC = () => {
   const handleUploadAvatarClick = () => {
     avatarUploadRef?.current?.click();
   };
-  
+
+  const handleAvatarUpdate = (event: Event) => {
+    console.log(event);
+  };
+
+  const handleAvatarDeletion = () => {
+    console.log("deleting avatar");
+  };
+
   const handleNavigateBack = () => {
     if (userInfo?.configuredProfile) {
       navigator("/chat");
@@ -112,7 +120,10 @@ const UserProfile: React.FC = () => {
               )}
             </Avatar>
             {hovered && (
-              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-32 md:w-48 md:h-48 flex items-center justify-center bg-black/50 rounded-full">
+              <div
+                className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-32 md:w-48 md:h-48 flex items-center justify-center bg-black/50 rounded-full"
+                onClick={image ? handleAvatarDeletion : handleAvatarUpdate}
+              >
                 {image ? (
                   <FaTrash className="text-white text-3xl cursor-pointer" />
                 ) : (
