@@ -2,6 +2,7 @@ import { Response } from "express";
 import User from "@/models/Usermodel";
 import dotenv from "dotenv";
 import { Request } from "@/types";
+import { renameSync } from "fs";
 
 dotenv.config();
 
@@ -52,6 +53,55 @@ export const updateProfile = async (
         avatar: userData.avatar,
         theme: userData.theme,
       },
+    });
+  } catch (error) {
+    console.error(error);
+    return response.status(500).send("服务器内部错误");
+  }
+};
+
+/**
+ * updateAvatar is a controller function that is used to update the user avatar image
+ * @author Sriram Sundar
+ *
+ * @async
+ * @param {Request} request
+ * @param {Response} response
+ * @returns {Promise<Response>}
+ */
+export const updateAvatar = async (
+  request: Request,
+  response: Response
+): Promise<Response> => {
+  try {
+    const { userId } = request.body;
+    console.log(request.body);
+
+    if (!request.file) {
+      return response.status(400).send("需要上传图片");
+    }
+
+    const currDate = Date.now();
+    const fileName =
+      "src/assets/uploads/avatars/" + currDate + request.file.originalname;
+    renameSync(request.file.path, fileName);
+
+    const userData = await User.findByIdAndUpdate(
+      userId,
+      { avatar: fileName },
+      { new: true, runValidators: true }
+    );
+
+    console.log(userData);
+
+    if (!userData) {
+      console.log("in 404");
+
+      return response.status(404).send("错误");
+    }
+
+    return response.status(200).json({
+      avatar: userData.avatar,
     });
   } catch (error) {
     console.error(error);

@@ -149,6 +149,27 @@ declare interface AuthResponse {
 }
 
 /**
+ * response structure for updating the user profile information from the LiMedAi Server
+ * @author Sriram Sundar
+ *
+ * @interface avatarUpdateResponse
+ * @typedef {avatarUpdateResponse}
+ */
+declare interface avatarUpdateResponse {
+  /**
+   * url of the uploaded avatar image from the server
+   * @author Sriram Sundar
+   *
+   * @type {{
+   *     avatar: string;
+   *   }}
+   */
+  data: {
+    avatar: string;
+  };
+}
+
+/**
  * AuthApiResponse type for the response from the auth api endpoints from the LiMedAi Server
  * @author Sriram Sundar
  *

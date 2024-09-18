@@ -224,3 +224,5 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+src/assets/uploads

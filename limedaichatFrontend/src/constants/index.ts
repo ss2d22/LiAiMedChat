@@ -55,4 +55,12 @@ export const PROFILE_BASE_ROUTES = "/api/profile";
  */
 export const UPDATE_PROFILE_ROUTE = `${PROFILE_BASE_ROUTES}/updateprofile`;
 
+/**
+ * endpoint for the update avatar route
+ * @author Sriram Sundar
+ *
+ * @type {string}
+ */
+export const UPDATE_AVATAR_ROUTE = `${PROFILE_BASE_ROUTES}/updateavatar`;
+
 //Chat Routes

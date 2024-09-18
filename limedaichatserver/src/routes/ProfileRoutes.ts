@@ -1,7 +1,9 @@
 import { Router } from "express";
 import dotenv from "dotenv";
 import { verifyJWT } from "@/middlewares/AuthenticationMiddleware";
-import { updateProfile } from "@/controllers/ProfileController";
+import { updateProfile, updateAvatar } from "@/controllers/ProfileController";
+import { uploadImage } from "@/middlewares/ProfileMiddlewares";
+
 dotenv.config();
 
 /**
@@ -30,9 +32,6 @@ const profileRoutes: Router = Router();
  *           schema:
  *             type: object
  *             properties:
- *               userId:
- *                 type: string
- *                 example: "60d0fe4f5311236168a109ca"
  *               firstName:
  *                 type: string
  *                 example: "约翰"
@@ -72,8 +71,8 @@ const profileRoutes: Router = Router();
  *                       type: string
  *                       example: "https://example.com/avatar.jpg"
  *                     theme:
- *                       type: string
- *                       example: "黑暗"
+ *                       type: number
+ *                       example: 1
  *       400:
  *         description: Bad Request, missing required fields
  *         content:
@@ -111,4 +110,7 @@ const profileRoutes: Router = Router();
  *               example: "服务器内部错误"
  */
 profileRoutes.patch("/updateprofile", verifyJWT, updateProfile);
+
+profileRoutes.patch("/updateavatar", verifyJWT, uploadImage, updateAvatar);
+
 export default profileRoutes;

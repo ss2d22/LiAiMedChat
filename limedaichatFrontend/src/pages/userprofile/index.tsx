@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { RootState } from "@/types";
+import { avatarUpdateResponse, RootState } from "@/types";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { IoArrowBack } from "react-icons/io5";
@@ -9,10 +9,14 @@ import { FaPlus, FaTrash } from "react-icons/fa";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { usePatchUpdateProfileMutation } from "@/state/api/profileApi";
+import {
+  usePatchUpdateAvatarMutation,
+  usePatchUpdateProfileMutation,
+} from "@/state/api/profileApi";
 import { AppDispatch, AuthApiResponse } from "@/types";
 import { useDispatch } from "react-redux";
 import { setUserInfo } from "@/state/slices/authSlice";
+import { BACKEND_URL } from "@/constants";
 
 /**
  * User Profile component that displays the user information and allows user to
@@ -29,14 +33,19 @@ const UserProfile: React.FC = () => {
   const [image, setImage] = useState<string | null>(null);
   const [hovered, setHovered] = useState<boolean>(false);
   const [theme, setTheme] = useState<number>(0);
-  const avatarUploadRef = useRef<HTMLInputElement | null>(null);
+  const avatarUploadRef = useRef<HTMLInputElement>(null);
   const [triggerUpdateProfile] = usePatchUpdateProfileMutation();
+  const [triggerUpdateAvatar] = usePatchUpdateAvatarMutation();
   const dispatch: AppDispatch = useDispatch();
   useEffect(() => {
     if (userInfo?.configuredProfile) {
       setFirstName(userInfo.firstName!);
       setLastName(userInfo.lastName!);
       setTheme(userInfo.theme!);
+    }
+    if (userInfo?.avatar) {
+      console.log(userInfo.avatar);
+      setImage(`${BACKEND_URL}/${userInfo.avatar}`);
     }
   }, [userInfo]);
 
@@ -66,13 +75,23 @@ const UserProfile: React.FC = () => {
   };
 
   const handleUploadAvatarClick = () => {
+    console.log("uploading avatar click");
+
     avatarUploadRef?.current?.click();
   };
-  const handleAvatarUpdate = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleAvatarUpdate = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    console.log("updating avatar");
+
     const avatarFile: File | undefined = event.target.files?.[0];
     if (avatarFile) {
       const reqForm = new FormData();
       reqForm.append("avatar", avatarFile);
+      const result = (await triggerUpdateAvatar(
+        reqForm
+      )) as avatarUpdateResponse;
+      console.log(result);
     }
   };
 

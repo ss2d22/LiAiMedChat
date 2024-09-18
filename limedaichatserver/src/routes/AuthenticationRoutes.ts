@@ -30,6 +30,9 @@ const authenticationRoutes: Router = Router();
  *         application/json:
  *           schema:
  *             type: object
+ *              required:
+ *               - email
+ *               - password
  *             properties:
  *               email:
  *                 type: string
@@ -37,12 +40,7 @@ const authenticationRoutes: Router = Router();
  *               password:
  *                 type: string
  *                 example: "密码123"
- *               firstName:
- *                 type: string
- *                 example: "约翰"
- *               lastName:
- *                 type: string
- *                 example: "多伊"
+ *
  *     responses:
  *       201:
  *         description: User created successfully
@@ -60,12 +58,9 @@ const authenticationRoutes: Router = Router();
  *                     email:
  *                       type: string
  *                       example: "用户@example.com"
- *                     firstName:
- *                       type: string
- *                       example: "约翰"
- *                     lastName:
- *                       type: string
- *                       example: "多伊"
+ *                     configuredProfile:
+ *                       type: boolean
+ *                       example: false
  *       400:
  *         description: Bad Request, missing required fields or invalid data
  *         content:

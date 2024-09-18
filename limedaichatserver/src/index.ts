@@ -6,6 +6,7 @@ import mongoose from "mongoose";
 import authenticationRoutes from "@/routes/AuthenticationRoutes";
 import morgan from "morgan";
 import profileRoutes from "@/routes/ProfileRoutes";
+import path from "path";
 
 // setup server
 dotenv.config();
@@ -43,6 +44,11 @@ app.use(
   })
 );
 
+app.use(
+  "/src/assets/uploads/avatars",
+  express.static(path.join(__dirname, "assets", "uploads", "avatars"))
+);
+
 app.use(cookieParser());
 
 app.use(express.json());
@@ -53,7 +59,7 @@ app.use(morgan("combined"));
 app.use("/api/authentication", authenticationRoutes);
 app.use("/api/profile", profileRoutes);
 
-//hello world example on / route
+//get on / route with fun text hahaha
 app.get("/", (request: Request, response: Response) => {
   response.status(200).send("server for limedai chat app");
 });
