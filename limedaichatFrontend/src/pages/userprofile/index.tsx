@@ -64,10 +64,18 @@ const UserProfile: React.FC = () => {
       }
     }
   };
+
+  const handleNavigateBack = () => {
+    if (userInfo?.configuredProfile) {
+      navigator("/chat");
+    } else {
+      toast.error("请完成您的个人资料的初始设置");
+    }
+  };
   return (
     <div className="bg-[#1b1c24] h-[100vh] flex items-center justify-center flex-col gap-10">
       <div className="flex flex-col gap-10 w-[80vw] md:w-max ">
-        <div>
+        <div onClick={handleNavigateBack }>
           <IoArrowBack className="text-4xl lg:text-6xl text-white/90 cursor-pointer" />
         </div>
         <div className="grid grid-cols-2">
