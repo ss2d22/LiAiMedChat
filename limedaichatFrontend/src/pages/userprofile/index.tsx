@@ -29,7 +29,7 @@ const UserProfile: React.FC = () => {
   const [image, setImage] = useState<string | null>(null);
   const [hovered, setHovered] = useState<boolean>(false);
   const [theme, setTheme] = useState<number>(0);
-  const avatarUploadRef = useRef(null);
+  const avatarUploadRef = useRef<HTMLInputElement | null>(null);
   const [triggerUpdateProfile] = usePatchUpdateProfileMutation();
   const dispatch: AppDispatch = useDispatch();
   useEffect(() => {
@@ -68,9 +68,12 @@ const UserProfile: React.FC = () => {
   const handleUploadAvatarClick = () => {
     avatarUploadRef?.current?.click();
   };
-
-  const handleAvatarUpdate = (event: Event) => {
-    console.log(event);
+  const handleAvatarUpdate = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const avatarFile: File | undefined = event.target.files?.[0];
+    if (avatarFile) {
+      const reqForm = new FormData();
+      reqForm.append("avatar", avatarFile);
+    }
   };
 
   const handleAvatarDeletion = () => {
@@ -122,7 +125,7 @@ const UserProfile: React.FC = () => {
             {hovered && (
               <div
                 className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-32 md:w-48 md:h-48 flex items-center justify-center bg-black/50 rounded-full"
-                onClick={image ? handleAvatarDeletion : handleAvatarUpdate}
+                onClick={image ? handleAvatarDeletion : handleUploadAvatarClick}
               >
                 {image ? (
                   <FaTrash className="text-white text-3xl cursor-pointer" />
@@ -131,7 +134,14 @@ const UserProfile: React.FC = () => {
                 )}
               </div>
             )}
-            {/* inputs */}
+            <input
+              type="file"
+              ref={avatarUploadRef}
+              className="hidden"
+              onChange={handleAvatarUpdate}
+              name="avatar"
+              accept=".jpg, .jpeg, .png, .svg, .webp"
+            />
           </div>
           <div className="flex min-w-32 md:min-w-64 flex-col gap-5 text-white items-center justify-center">
             <div className="w-full">
@@ -181,7 +191,7 @@ const UserProfile: React.FC = () => {
         <div className="w-full">
           <Button
             className="h-16 w-full bg-purple-700 hover:bg-purple-900 transition-all duration-300"
-            onClick={saveChanges}
+            onClick={() => void saveChanges}
           >
             保存更改
           </Button>
