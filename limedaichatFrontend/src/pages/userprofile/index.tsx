@@ -1,14 +1,18 @@
 import { useSelector } from "react-redux";
 import { RootState } from "@/types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { IoArrowBack } from "react-icons/io5";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { colours, getColour } from "@/utils/colours";
 import { FaPlus, FaTrash } from "react-icons/fa";
 import { Input } from "@/components/ui/input";
-import { current } from "@reduxjs/toolkit";
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
+import { usePatchUpdateProfileMutation } from "@/state/api/profileApi";
+import { AppDispatch, AuthApiResponse } from "@/types";
+import { useDispatch } from "react-redux";
+import { setUserInfo } from "@/state/slices/authSlice";
 
 /**
  * User Profile component that displays the user information and allows user to
@@ -25,23 +29,54 @@ const UserProfile: React.FC = () => {
   const [image, setImage] = useState<string | null>(null);
   const [hovered, setHovered] = useState<boolean>(false);
   const [theme, setTheme] = useState<number>(0);
+  const [triggerUpdateProfile] = usePatchUpdateProfileMutation();
+  const dispatch: AppDispatch = useDispatch();
 
-  const saveChanges = () => {
-    console.log("Save Changes");
+  useEffect(() => {
+    if (userInfo?.configuredProfile) {
+      setFirstName(userInfo.firstName!);
+      setLastName(userInfo.lastName!);
+      setTheme(userInfo.theme!);
+    }
+  }, [userInfo]);
+
+  const validateProfileConfig = () => {
+    if (!firstName) {
+      toast.error("名字为必填项");
+      return false;
+    }
+    if (!lastName) {
+      toast.error("姓氏为必填项");
+      return false;
+    }
+    return true;
+  };
+  const saveChanges = async () => {
+    if (validateProfileConfig()) {
+      const result = (await triggerUpdateProfile({
+        firstName,
+        lastName,
+        theme,
+      })) as AuthApiResponse;
+      if ("data" in result && result.data.user.id) {
+        dispatch(setUserInfo(result.data.user));
+        navigator("/chat");
+      }
+    }
   };
   return (
     <div className="bg-[#1b1c24] h-[100vh] flex items-center justify-center flex-col gap-10">
       <div className="flex flex-col gap-10 w-[80vw] md:w-max ">
         <div>
-          <IoArrowBack className="text-4xl lg:text-6xl text-white/90 cursor-pointer " />
+          <IoArrowBack className="text-4xl lg:text-6xl text-white/90 cursor-pointer" />
         </div>
         <div className="grid grid-cols-2">
           <div
-            className="h-full w-32 md:w-48 md:h-48 relative flex items-center  justify-center"
+            className="h-full w-32 md:w-48 md:h-48 flex items-center justify-center relative"
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
           >
-            <Avatar className="h-32 w-32 md:w-48 md:h-48 rounded-full overflow-hidden">
+            <Avatar className="h-32 w-32 md:w-48 md:h-48 rounded-full overflow-hidden \">
               {image ? (
                 <>
                   <AvatarImage
@@ -65,7 +100,7 @@ const UserProfile: React.FC = () => {
               )}
             </Avatar>
             {hovered && (
-              <div className="absolute inset-0 flex items-center justify-center bg-black/50 rounded-full">
+              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-32 md:w-48 md:h-48 flex items-center justify-center bg-black/50 rounded-full">
                 {image ? (
                   <FaTrash className="text-white text-3xl cursor-pointer" />
                 ) : (
