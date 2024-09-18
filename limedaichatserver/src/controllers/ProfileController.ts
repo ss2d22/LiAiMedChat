@@ -20,8 +20,11 @@ export const updateProfile = async (
 ): Promise<Response> => {
   try {
     const { userId, firstName, lastName, theme } = request.body;
+    console.log(request.body);
 
-    if (!firstName || !lastName || !theme) {
+    if (!firstName || !lastName) {
+      console.log("in 400");
+
       return response.status(400).send("名字、姓氏和主题均为必填项");
     }
     const userData = await User.findByIdAndUpdate(

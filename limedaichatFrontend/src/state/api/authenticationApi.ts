@@ -11,7 +11,6 @@ import {
  * endpoints of apis from the backend to be used in the frontend using react redux
  * @author Sriram Sundar
  *
- * @type {*}
  */
 export const authenticationApi = createApi({
   baseQuery: fetchBaseQuery({
@@ -48,7 +47,6 @@ export const authenticationApi = createApi({
  * hook to use the postSignUp mutation from react redux
  * @author Sriram Sundar
  *
- * @type {*}
  */
 export const {
   usePostSignUpMutation,

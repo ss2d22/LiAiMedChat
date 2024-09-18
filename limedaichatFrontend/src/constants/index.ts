@@ -38,4 +38,21 @@ export const SIGNIN_ROUTE = `${AUTHENTICATION_BASE_ROUTES}/signin`;
  */
 export const FETCH_USER_INFO_ROUTE = `${AUTHENTICATION_BASE_ROUTES}/fetchuserinfo`;
 
+//Profile Routes
+/**
+ * base route for profile related endpoints
+ * @author Sriram Sundar
+ *
+ * @type {"/api/profile"}
+ */
+export const PROFILE_BASE_ROUTES = "/api/profile";
+
+/**
+ * endpoint for the update profile route
+ * @author Sriram Sundar
+ *
+ * @type {string}
+ */
+export const UPDATE_PROFILE_ROUTE = `${PROFILE_BASE_ROUTES}/updateprofile`;
+
 //Chat Routes
