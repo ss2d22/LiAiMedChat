@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { RootState, RouterProps, UserInformation } from "@/types";
 import { useDispatch } from "react-redux";
 import { setUserInfo } from "@/state/slices/authSlice";
-import { AppDispatch, AuthApiResponse } from "@/types";
+import { AppDispatch } from "@/types";
 import { useEffectAsync } from "@/utils/useEffectAsync";
 import { useState } from "react";
 import { useGetFetchUserInfoQuery } from "./state/api/authenticationApi";
@@ -50,7 +50,7 @@ const App: React.FC = () => {
   const userInfo = useSelector((state: RootState) => state.auth.userInfo);
   const dispatch: AppDispatch = useDispatch();
   const [loading, setLoading] = useState<boolean>(true);
-  const { data, error, isLoading, refetch } = useGetFetchUserInfoQuery({});
+  const { isLoading, refetch } = useGetFetchUserInfoQuery({});
 
   useEffectAsync(async () => {
     const getUserData = async () => {
