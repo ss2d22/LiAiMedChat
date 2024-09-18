@@ -4,8 +4,11 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { IoArrowBack } from "react-icons/io5";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { getColour } from "@/utils/colours";
+import { colours, getColour } from "@/utils/colours";
 import { FaPlus, FaTrash } from "react-icons/fa";
+import { Input } from "@/components/ui/input";
+import { current } from "@reduxjs/toolkit";
+import { Button } from "@/components/ui/button";
 
 /**
  * User Profile component that displays the user information and allows user to
@@ -22,6 +25,10 @@ const UserProfile: React.FC = () => {
   const [image, setImage] = useState<string | null>(null);
   const [hovered, setHovered] = useState<boolean>(false);
   const [theme, setTheme] = useState<number>(0);
+
+  const saveChanges = () => {
+    console.log("Save Changes");
+  };
   return (
     <div className="bg-[#1b1c24] h-[100vh] flex items-center justify-center flex-col gap-10">
       <div className="flex flex-col gap-10 w-[80vw] md:w-max ">
@@ -66,7 +73,60 @@ const UserProfile: React.FC = () => {
                 )}
               </div>
             )}
+            {/* inputs */}
           </div>
+          <div className="flex min-w-32 md:min-w-64 flex-col gap-5 text-white items-center justify-center">
+            <div className="w-full">
+              <Input
+                placeholder="电子邮件"
+                type="email"
+                disabled
+                value={userInfo?.email}
+                className="rounded-lg p-6 bg-[#2c2e3b] border-none"
+              />
+            </div>
+            <div className="w-full">
+              <Input
+                placeholder="名"
+                type="text"
+                onChange={(e) => setFirstName(e.target.value)}
+                value={firstName}
+                className="rounded-lg p-6 bg-[#2c2e3b] border-none"
+              />
+            </div>
+            <div className="w-full">
+              <Input
+                placeholder="姓"
+                type="text"
+                onChange={(e) => setLastName(e.target.value)}
+                value={lastName}
+                className="rounded-lg p-6 bg-[#2c2e3b] border-none"
+              />
+            </div>
+            <div className="w-full flex gap-5">
+              {colours.map((colour, currentIndex) => (
+                <div
+                  className={`${colour} h-8 w-8 rounded-full cursor-pointer transition-all duration-300 ${
+                    theme === currentIndex
+                      ? "outline outline-white outline-1"
+                      : ""
+                  }`}
+                  key={currentIndex}
+                  onClick={() => setTheme(currentIndex)}
+                >
+                  {" "}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+        <div className="w-full">
+          <Button
+            className="h-16 w-full bg-purple-700 hover:bg-purple-900 transition-all duration-300"
+            onClick={saveChanges}
+          >
+            保存更改
+          </Button>
         </div>
       </div>
     </div>
