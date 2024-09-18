@@ -103,10 +103,9 @@ const Auth: React.FC = () => {
     }
   };
   return (
-    <section className="h-[100vh] w-[100vw] flex items-center justify-center">
-      <div className="h-[80vh] bg-white border-2 border-white text-opacity-90 shadow-2xl w-[80vw] md:w-[90vw] lg:w-[70vw] xl:w-[60vw] rounded-3xl grid xl:grid-cols-2">
+    <section className="h-[100vh] w-[100vw] flex items-center justify-center bg-[#1b1c24]">
+      <div className="h-[80vh] bg-[#1b1c24] border-2 border-[#1b1c24] text-opacity-90 shadow-2xl w-[80vw] md:w-[90vw] lg:w-[70vw] xl:w-[60vw] rounded-3xl grid xl:grid-cols-2 text-white">
         <div className="flex flex-col gap-10 items-center justify-center">
-          ``{" "}
           <div className="flex items-center justify-center flex-col">
             <div className="flex items-center justify-center">
               <h1 className="text-5xl font-bold md:text-6xl">欢迎</h1>
@@ -122,13 +121,13 @@ const Auth: React.FC = () => {
               <TabsList className="bg-transparent rounded-none w-full">
                 <TabsTrigger
                   value="登录"
-                  className="data-[state=active]:bg-transparent text-black text-opacity-90 border-b-2 rounded-none w-full data-[state=active]:text-black data-[state=active]:font-semibold data-[state=active]:border-b-purple-500 p-3 transition-all duration-500"
+                  className="data-[state=active]:bg-transparent text-white text-opacity-90 border-b-2 rounded-none w-full data-[state=active]:text-white data-[state=active]:font-semibold data-[state=active]:border-b-purple-500 p-3 transition-all duration-500"
                 >
                   登录
                 </TabsTrigger>
                 <TabsTrigger
                   value="报名"
-                  className="data-[state=active]:bg-transparent text-black text-opacity-90 border-b-2 rounded-none w-full data-[state=active]:text-black data-[state=active]:font-semibold data-[state=active]:border-b-purple-500 p-3 transition-all duration-500"
+                  className="data-[state=active]:bg-transparent text-white text-opacity-90 border-b-2 rounded-none w-full data-[state=active]:text-white data-[state=active]:font-semibold data-[state=active]:border-b-purple-500 p-3 transition-all duration-500"
                 >
                   报名
                 </TabsTrigger>
@@ -137,14 +136,14 @@ const Auth: React.FC = () => {
                 <Input
                   placeholder="电子邮件"
                   type="email"
-                  className="rounded-full p-6"
+                  className="rounded-full p-6 text-black"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
                 <Input
                   placeholder="密码"
                   type="password"
-                  className="rounded-full p-6"
+                  className="rounded-full p-6 text-black"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
@@ -159,21 +158,21 @@ const Auth: React.FC = () => {
                 <Input
                   placeholder="电子邮件"
                   type="email"
-                  className="rounded-full p-6"
+                  className="rounded-full p-6 text-black"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
                 <Input
                   placeholder="密码"
                   type="password"
-                  className="rounded-full p-6"
+                  className="rounded-full p-6 text-black"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
                 <Input
                   placeholder="确认密码"
                   type="password"
-                  className="rounded-full p-6"
+                  className="rounded-full p-6 text-black"
                   value={repeatPassword}
                   onChange={(e) => setRepeatPassword(e.target.value)}
                 />
