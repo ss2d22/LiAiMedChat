@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { RootState } from "@/types";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { IoArrowBack } from "react-icons/io5";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -29,9 +29,9 @@ const UserProfile: React.FC = () => {
   const [image, setImage] = useState<string | null>(null);
   const [hovered, setHovered] = useState<boolean>(false);
   const [theme, setTheme] = useState<number>(0);
+  const avatarUploadRef = useRef(null);
   const [triggerUpdateProfile] = usePatchUpdateProfileMutation();
   const dispatch: AppDispatch = useDispatch();
-
   useEffect(() => {
     if (userInfo?.configuredProfile) {
       setFirstName(userInfo.firstName!);
@@ -65,6 +65,10 @@ const UserProfile: React.FC = () => {
     }
   };
 
+  const handleUploadAvatarClick = () => {
+    avatarUploadRef?.current?.click();
+  };
+  
   const handleNavigateBack = () => {
     if (userInfo?.configuredProfile) {
       navigator("/chat");
@@ -75,7 +79,7 @@ const UserProfile: React.FC = () => {
   return (
     <div className="bg-[#1b1c24] h-[100vh] flex items-center justify-center flex-col gap-10">
       <div className="flex flex-col gap-10 w-[80vw] md:w-max ">
-        <div onClick={handleNavigateBack }>
+        <div onClick={handleNavigateBack}>
           <IoArrowBack className="text-4xl lg:text-6xl text-white/90 cursor-pointer" />
         </div>
         <div className="grid grid-cols-2">
