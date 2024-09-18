@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 import mongoose from "mongoose";
 import authenticationRoutes from "@/routes/AuthenticationRoutes";
 import morgan from "morgan";
+import profileRoutes from "@/routes/ProfileRoutes";
 
 // setup server
 dotenv.config();
@@ -48,16 +49,16 @@ app.use(express.json());
 
 app.use(morgan("combined"));
 
-//add routes
+//use routes
 app.use("/api/authentication", authenticationRoutes);
+app.use("/api/profile", profileRoutes);
 
 //hello world example on / route
 app.get("/", (request: Request, response: Response) => {
-  response.status(200).send("Hello World");
+  response.status(200).send("server for limedai chat app");
 });
 
 //start server and connect to mongodb
-
 app
   .listen(PORT, () => {
     console.log("Server running at PORT: ", PORT);

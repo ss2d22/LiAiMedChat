@@ -32,13 +32,21 @@ declare interface Request extends e.Request {
    * @type {{
    *     email: Email;
    *     password: string;
-   *     userId: string;
+   *     userId?: string;
+   *     firstName?: string;
+   *     lastName?: string;
+   *     avatar?: string;
+   *     theme?: number;
    *   }}
    */
   body: {
     email: Email;
     password: string;
     userId?: string;
+    firstName?: string;
+    lastName?: string;
+    avatar?: string;
+    theme?: number;
   };
 }
 
