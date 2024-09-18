@@ -136,13 +136,6 @@ declare interface SignInPayload {
 
 declare interface AuthResponse {
   /**
-   * status code from the server response as per react redux toolkit query
-   * @author Sriram Sundar
-   *
-   * @type {number}
-   */
-  status: number;
-  /**
    * User object with id and email
    * @author Sriram Sundar
    *
@@ -186,13 +179,6 @@ declare interface UserInformation {
    * @type {string}
    */
   email: string;
-
-  /**
-   * username of the user
-   * @type {string}
-   */
-  username?: string;
-
   /**
    * profile picture of the user
    * @type {string}
@@ -204,6 +190,24 @@ declare interface UserInformation {
    * @type {boolean}
    */
   configuredProfile?: boolean;
+
+  /**
+   * first name of the user
+   * @type {string}
+   */
+  firstName?: string;
+
+  /**
+   * last name of the user
+   * @type {string}
+   */
+  lastName?: string;
+
+  /**
+   * theme preference of the user
+   * @type {number}
+   */
+  theme?: number;
 }
 
 /**
