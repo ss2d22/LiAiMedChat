@@ -218,8 +218,29 @@ declare type avatarDeleteResponse = avatarDelete | ErrorResponse;
  */
 declare type AuthApiResponse = AuthResponse | ErrorResponse;
 
+/**
+ * fetchUserInfoResponse type for the response from the fetch user info endpoint from the LiMedAi Server
+ * @author Sriram Sundar
+ *
+ * @interface fetchUserInfoResponse
+ * @typedef {fetchUserInfoResponse}
+ */
 declare interface fetchUserInfoResponse {
+  /**
+   * wether the request was successful or not
+   * @author Sriram Sundar
+   *
+   * @type {boolean}
+   */
   isSuccess: boolean;
+  /**
+   * user information object from the server
+   * @author Sriram Sundar
+   *
+   * @type {{
+   *     user: UserInformation;
+   *   }}
+   */
   data: {
     user: UserInformation;
   };
