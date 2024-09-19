@@ -141,7 +141,7 @@ export const deleteAvatar = async (
     await userData.save();
 
     return response.status(200).json({
-      message: "",
+      message: "用户头像删除成功",
       deleted: true,
     });
   } catch (error) {
