@@ -38,7 +38,7 @@ const AuthRoute: React.FC<RouterProps> = ({ children }: RouterProps) => {
   const userInfo = useSelector((state: RootState) => state.auth.userInfo);
   const isAuth = !!userInfo;
 
-  return isAuth ? <Navigate to="/userprofile" /> : children;
+  return isAuth ? <Navigate to="/chat" /> : children;
 };
 
 /**
