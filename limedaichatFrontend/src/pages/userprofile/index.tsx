@@ -168,7 +168,9 @@ const UserProfile: React.FC = () => {
               type="file"
               ref={avatarUploadRef}
               className="hidden"
-              onChange={handleAvatarUpdate}
+              onChange={(event) => {
+                void handleAvatarUpdate(event);
+              }}
               name="avatar"
               accept=".jpg, .jpeg, .png, .svg, .webp"
             />
