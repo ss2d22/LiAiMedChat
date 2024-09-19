@@ -153,7 +153,7 @@ export const fetchUserInfo = async (
   try {
     const userData = await User.findById(request.body.userId);
     if (!userData) {
-      return response.status(404).send("未找到电子邮件");
+      return response.status(404).send("未找到用户");
     }
 
     return response.status(200).json({

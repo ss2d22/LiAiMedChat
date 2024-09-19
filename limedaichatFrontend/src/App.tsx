@@ -3,7 +3,7 @@ import Auth from "@/pages/authentication";
 import Chat from "@/pages/chat";
 import UserProfile from "./pages/userprofile";
 import { useSelector } from "react-redux";
-import { RootState, RouterProps, UserInformation } from "@/types";
+import { fetchUserInfoResponse, RootState, RouterProps } from "@/types";
 import { useDispatch } from "react-redux";
 import { setUserInfo } from "@/state/slices/authSlice";
 import { AppDispatch } from "@/types";
@@ -55,10 +55,10 @@ const App: React.FC = () => {
   useEffectAsync(async () => {
     const getUserData = async () => {
       try {
-        const result = await refetch();
+        const result = (await refetch()) as unknown as fetchUserInfoResponse;
         console.log({ result });
         if (result.data && result.isSuccess) {
-          dispatch(setUserInfo(result.data.user as UserInformation));
+          dispatch(setUserInfo(result.data.user));
         } else {
           dispatch(setUserInfo(undefined));
         }

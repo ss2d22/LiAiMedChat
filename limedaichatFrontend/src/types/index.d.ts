@@ -149,12 +149,102 @@ declare interface AuthResponse {
 }
 
 /**
+ * response structure for updating the user profile information from the LiMedAi Server
+ * @author Sriram Sundar
+ *
+ * @interface avatarUpdateResponse
+ * @typedef {avatarUpdateResponse}
+ */
+declare interface avatarUpdate {
+  /**
+   * url of the uploaded avatar image from the server
+   * @author Sriram Sundar
+   *
+   * @type {{
+   *     avatar: string;
+   *   }}
+   */
+  data: {
+    avatar: string;
+  };
+}
+
+/**
+ * response structure for updating the user profile information from the LiMedAi Server
+ * taking error response into account as well
+
+ * @author Sriram Sundar
+ *
+ * @typedef {avatarUpdateResponse}
+ */
+declare type avatarUpdateResponse = avatarUpdate | ErrorResponse;
+
+/**
+ * sucess resoibse for deleting avatar
+ * @author Sriram Sundar
+ *
+ * @interface avatarDelete
+ * @typedef {avatarDelete}
+ */
+declare interface avatarDelete {
+  /**
+   * body of the response from the server for delete avatar endpoint
+   * @author Sriram Sundar
+   *
+   * @type {{
+   *     message: string;
+   *     deleted: boolean;
+   *   }}
+   */
+  data: {
+    message: string;
+    deleted: boolean;
+  };
+}
+
+/**
+ * response structure for deleting the user avatar image from the LiMedAi Server
+ * taking error response into account as well
+ * @author Sriram Sundar
+ *
+ * @typedef {avatarDeleteResponse}
+ */
+declare type avatarDeleteResponse = avatarDelete | ErrorResponse;
+/**
  * AuthApiResponse type for the response from the auth api endpoints from the LiMedAi Server
  * @author Sriram Sundar
  *
  * @typedef {AuthApiResponse}
  */
 declare type AuthApiResponse = AuthResponse | ErrorResponse;
+
+/**
+ * fetchUserInfoResponse type for the response from the fetch user info endpoint from the LiMedAi Server
+ * @author Sriram Sundar
+ *
+ * @interface fetchUserInfoResponse
+ * @typedef {fetchUserInfoResponse}
+ */
+declare interface fetchUserInfoResponse {
+  /**
+   * wether the request was successful or not
+   * @author Sriram Sundar
+   *
+   * @type {boolean}
+   */
+  isSuccess: boolean;
+  /**
+   * user information object from the server
+   * @author Sriram Sundar
+   *
+   * @type {{
+   *     user: UserInformation;
+   *   }}
+   */
+  data: {
+    user: UserInformation;
+  };
+}
 
 // types for state management
 /**

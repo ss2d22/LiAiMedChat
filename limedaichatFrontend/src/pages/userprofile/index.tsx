@@ -1,18 +1,23 @@
 import { useSelector } from "react-redux";
-import { RootState } from "@/types";
-import { useEffect, useState } from "react";
+import { avatarDeleteResponse, avatarUpdateResponse, RootState } from "@/types";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { IoArrowBack } from "react-icons/io5";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { colours, getColour } from "@/utils/colours";
 import { FaPlus, FaTrash } from "react-icons/fa";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { usePatchUpdateProfileMutation } from "@/state/api/profileApi";
+import {
+  useDeleteDeleteAvatarMutation,
+  usePatchUpdateAvatarMutation,
+  usePatchUpdateProfileMutation,
+} from "@/state/api/profileApi";
 import { AppDispatch, AuthApiResponse } from "@/types";
 import { useDispatch } from "react-redux";
 import { setUserInfo } from "@/state/slices/authSlice";
+import { BACKEND_URL } from "@/constants";
 
 /**
  * User Profile component that displays the user information and allows user to
@@ -29,14 +34,20 @@ const UserProfile: React.FC = () => {
   const [image, setImage] = useState<string | null>(null);
   const [hovered, setHovered] = useState<boolean>(false);
   const [theme, setTheme] = useState<number>(0);
+  const avatarUploadRef = useRef<HTMLInputElement>(null);
   const [triggerUpdateProfile] = usePatchUpdateProfileMutation();
+  const [triggerUpdateAvatar] = usePatchUpdateAvatarMutation();
+  const [triggerDeleteAvatar] = useDeleteDeleteAvatarMutation();
   const dispatch: AppDispatch = useDispatch();
-
   useEffect(() => {
     if (userInfo?.configuredProfile) {
       setFirstName(userInfo.firstName!);
       setLastName(userInfo.lastName!);
       setTheme(userInfo.theme!);
+    }
+    if (userInfo?.avatar) {
+      console.log(userInfo.avatar);
+      setImage(`${BACKEND_URL}/${userInfo.avatar}`);
     }
   }, [userInfo]);
 
@@ -65,6 +76,40 @@ const UserProfile: React.FC = () => {
     }
   };
 
+  const handleUploadAvatarClick = () => {
+    console.log("uploading avatar click");
+    avatarUploadRef?.current?.click();
+  };
+  const handleAvatarUpdate = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    console.log("updating avatar");
+
+    const avatarFile: File | undefined = event.target.files?.[0];
+    if (avatarFile) {
+      const reqForm = new FormData();
+      reqForm.append("avatar", avatarFile);
+      const result = (await triggerUpdateAvatar(
+        reqForm
+      )) as avatarUpdateResponse;
+      if ("data" in result && result.data.avatar && userInfo) {
+        dispatch(setUserInfo({ ...userInfo, avatar: result.data.avatar }));
+        toast.success("头像更新成功");
+      }
+      console.log();
+    }
+  };
+
+  const handleAvatarDeletion = async () => {
+    console.log("deleting avatar");
+    const result = (await triggerDeleteAvatar({})) as avatarDeleteResponse;
+    if ("data" in result && result.data.deleted && userInfo) {
+      dispatch(setUserInfo({ ...userInfo, avatar: undefined }));
+      toast.success("用户头像删除成功");
+      setImage(null);
+    }
+  };
+
   const handleNavigateBack = () => {
     if (userInfo?.configuredProfile) {
       navigator("/chat");
@@ -75,7 +120,7 @@ const UserProfile: React.FC = () => {
   return (
     <div className="bg-[#1b1c24] h-[100vh] flex items-center justify-center flex-col gap-10">
       <div className="flex flex-col gap-10 w-[80vw] md:w-max ">
-        <div onClick={handleNavigateBack }>
+        <div onClick={handleNavigateBack}>
           <IoArrowBack className="text-4xl lg:text-6xl text-white/90 cursor-pointer" />
         </div>
         <div className="grid grid-cols-2">
@@ -108,7 +153,10 @@ const UserProfile: React.FC = () => {
               )}
             </Avatar>
             {hovered && (
-              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-32 md:w-48 md:h-48 flex items-center justify-center bg-black/50 rounded-full">
+              <div
+                className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-32 md:w-48 md:h-48 flex items-center justify-center bg-black/50 rounded-full"
+                onClick={image ? handleAvatarDeletion : handleUploadAvatarClick}
+              >
                 {image ? (
                   <FaTrash className="text-white text-3xl cursor-pointer" />
                 ) : (
@@ -116,7 +164,16 @@ const UserProfile: React.FC = () => {
                 )}
               </div>
             )}
-            {/* inputs */}
+            <input
+              type="file"
+              ref={avatarUploadRef}
+              className="hidden"
+              onChange={(event) => {
+                void handleAvatarUpdate(event);
+              }}
+              name="avatar"
+              accept=".jpg, .jpeg, .png, .svg, .webp"
+            />
           </div>
           <div className="flex min-w-32 md:min-w-64 flex-col gap-5 text-white items-center justify-center">
             <div className="w-full">
@@ -166,7 +223,7 @@ const UserProfile: React.FC = () => {
         <div className="w-full">
           <Button
             className="h-16 w-full bg-purple-700 hover:bg-purple-900 transition-all duration-300"
-            onClick={saveChanges}
+            onClick={() => void saveChanges}
           >
             保存更改
           </Button>
