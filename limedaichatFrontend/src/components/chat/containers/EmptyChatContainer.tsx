@@ -1,7 +1,12 @@
 import { animationOptions } from "@/utils/animationOptions";
 import Lottie from "react-lottie";
 
-const EmptyChatContainer = () => {
+/**
+ * empty placeholder chat container component for when the chat is empty
+ * @author Sriram Sundar
+ *
+ */
+const EmptyChatContainer: React.FC = () => {
   return (
     <section className="flex-1 md:bg-[#1c1d25] md:flex flex-col justify-center items-center hidden duration-1000 transition-all">
       <Lottie

@@ -6,6 +6,12 @@ import {
   UPDATE_PROFILE_ROUTE,
 } from "@/constants";
 
+/**
+ * profile related endpoints for the apis from the backend to be used 
+ * in the frontend using react redux
+ * @author Sriram Sundar
+ *
+ */
 export const profileApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: BACKEND_URL,
@@ -38,6 +44,12 @@ export const profileApi = createApi({
   }),
 });
 
+/**
+ * hooks to use the apis defined in this file using
+ * react redux
+ * @author Sriram Sundar
+ *
+ */
 export const {
   usePatchUpdateProfileMutation,
   usePatchUpdateAvatarMutation,

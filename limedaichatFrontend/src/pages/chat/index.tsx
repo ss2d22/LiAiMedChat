@@ -1,6 +1,6 @@
-import ChatContainer from "@/components/containers/ChatContainer";
-import ChatSelectedContainer from "@/components/containers/ChatSelectedContainer";
-import EmptyChatContainer from "@/components/containers/EmptyChatContainer";
+import ChatContainer from "@/components/chat/containers/ChatContainer";
+import ChatSelectedContainer from "@/components/chat/containers/ChatSelectedContainer";
+import EmptyChatContainer from "@/components/chat/containers/EmptyChatContainer";
 import { RootState } from "@/types";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
@@ -26,8 +26,8 @@ const Chat: React.FC = () => {
   return (
     <section className="flex h-[100vh] text text-white overflow-hidden">
       <ChatSelectedContainer />
-      <EmptyChatContainer />
       <ChatContainer />
+      {/* <EmptyChatContainer /> */}
     </section>
   );
 };
