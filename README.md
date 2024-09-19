@@ -5,6 +5,8 @@ tbd will update later
 
 the goal of this project is to be fully compliant with internet restrictions in china so that it can be hosted
 
+# TODO: PLS UPDATE ALL SWAGGER JSDOCS SO THAT COOKIE PART IS SHOWN PROPERLY FOR JWT IF POSSIBLE
+
 ## Technologies used :
 
 - Typescript
