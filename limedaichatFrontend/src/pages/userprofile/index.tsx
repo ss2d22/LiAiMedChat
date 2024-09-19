@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { avatarUpdateResponse, RootState } from "@/types";
+import { avatarDeleteResponse, avatarUpdateResponse, RootState } from "@/types";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { IoArrowBack } from "react-icons/io5";
@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import {
+  useDeleteDeleteAvatarMutation,
   usePatchUpdateAvatarMutation,
   usePatchUpdateProfileMutation,
 } from "@/state/api/profileApi";
@@ -36,6 +37,7 @@ const UserProfile: React.FC = () => {
   const avatarUploadRef = useRef<HTMLInputElement>(null);
   const [triggerUpdateProfile] = usePatchUpdateProfileMutation();
   const [triggerUpdateAvatar] = usePatchUpdateAvatarMutation();
+  const [triggerDeleteAvatar] = useDeleteDeleteAvatarMutation();
   const dispatch: AppDispatch = useDispatch();
   useEffect(() => {
     if (userInfo?.configuredProfile) {
@@ -76,7 +78,6 @@ const UserProfile: React.FC = () => {
 
   const handleUploadAvatarClick = () => {
     console.log("uploading avatar click");
-
     avatarUploadRef?.current?.click();
   };
   const handleAvatarUpdate = async (
@@ -91,16 +92,22 @@ const UserProfile: React.FC = () => {
       const result = (await triggerUpdateAvatar(
         reqForm
       )) as avatarUpdateResponse;
-      if (result.data.avatar && userInfo) {
+      if ("data" in result && result.data.avatar && userInfo) {
         dispatch(setUserInfo({ ...userInfo, avatar: result.data.avatar }));
         toast.success("头像更新成功");
       }
-      console.log(result);
+      console.log();
     }
   };
 
-  const handleAvatarDeletion = () => {
+  const handleAvatarDeletion = async () => {
     console.log("deleting avatar");
+    const result = (await triggerDeleteAvatar({})) as avatarDeleteResponse;
+    if ("data" in result && result.data.deleted && userInfo) {
+      dispatch(setUserInfo({ ...userInfo, avatar: undefined }));
+      toast.success("用户头像删除成功");
+      setImage(null);
+    }
   };
 
   const handleNavigateBack = () => {

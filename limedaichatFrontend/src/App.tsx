@@ -3,7 +3,7 @@ import Auth from "@/pages/authentication";
 import Chat from "@/pages/chat";
 import UserProfile from "./pages/userprofile";
 import { useSelector } from "react-redux";
-import { RootState, RouterProps, UserInformation } from "@/types";
+import { AuthApiResponse, RootState, RouterProps, UserInformation } from "@/types";
 import { useDispatch } from "react-redux";
 import { setUserInfo } from "@/state/slices/authSlice";
 import { AppDispatch } from "@/types";
@@ -63,7 +63,7 @@ const App: React.FC = () => {
           dispatch(setUserInfo(undefined));
         }
       } catch (error) {
-        console.error(error);
+        console.error(errorx);
         dispatch(setUserInfo(undefined));
       } finally {
         setLoading(false);

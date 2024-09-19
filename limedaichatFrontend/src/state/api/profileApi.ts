@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import {
   BACKEND_URL,
+  DELETE_AVATAR_ROUTE,
   UPDATE_AVATAR_ROUTE,
   UPDATE_PROFILE_ROUTE,
 } from "@/constants";
@@ -27,8 +28,18 @@ export const profileApi = createApi({
         body: payload as string,
       }),
     }),
+    deleteDeleteAvatar: build.mutation({
+      query: (payload) => ({
+        url: DELETE_AVATAR_ROUTE,
+        method: "DELETE",
+        body: payload as string,
+      }),
+    }),
   }),
 });
 
-export const { usePatchUpdateProfileMutation, usePatchUpdateAvatarMutation } =
-  profileApi;
+export const {
+  usePatchUpdateProfileMutation,
+  usePatchUpdateAvatarMutation,
+  useDeleteDeleteAvatarMutation,
+} = profileApi;

@@ -17,21 +17,21 @@ export const BACKEND_URL: string = import.meta.env
  */
 export const AUTHENTICATION_BASE_ROUTES = "/api/authentication";
 /**
- * endpoint for the signup route
+ * url for the signup endpoint
  * @author Sriram Sundar
  *
  * @type {string}
  */
 export const SIGNUP_ROUTE = `${AUTHENTICATION_BASE_ROUTES}/signup`;
 /**
- * endpoint for the signin route
+ * url for the signin endpoint
  * @author Sriram Sundar
  *
  * @type {string}
  */
 export const SIGNIN_ROUTE = `${AUTHENTICATION_BASE_ROUTES}/signin`;
 /**
- * endpoint for the fetuserinfo route
+ * url for the fetuserinfo endpoint
  * @author Sriram Sundar
  *
  * @type {string}
@@ -48,7 +48,7 @@ export const FETCH_USER_INFO_ROUTE = `${AUTHENTICATION_BASE_ROUTES}/fetchuserinf
 export const PROFILE_BASE_ROUTES = "/api/profile";
 
 /**
- * endpoint for the update profile route
+ * url for the update profile endpoint
  * @author Sriram Sundar
  *
  * @type {string}
@@ -56,11 +56,19 @@ export const PROFILE_BASE_ROUTES = "/api/profile";
 export const UPDATE_PROFILE_ROUTE = `${PROFILE_BASE_ROUTES}/updateprofile`;
 
 /**
- * endpoint for the update avatar route
+ * url for the update avatar endpoint
  * @author Sriram Sundar
  *
  * @type {string}
  */
 export const UPDATE_AVATAR_ROUTE = `${PROFILE_BASE_ROUTES}/updateavatar`;
+
+/**
+ * url for the delete avatar endpoint
+ * @author Sriram Sundar
+ *
+ * @type {string}
+ */
+export const DELETE_AVATAR_ROUTE = `${PROFILE_BASE_ROUTES}/deleteavatar`;
 
 //Chat Routes
