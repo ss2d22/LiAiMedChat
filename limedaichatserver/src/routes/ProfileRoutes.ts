@@ -1,7 +1,11 @@
 import { Router } from "express";
 import dotenv from "dotenv";
 import { verifyJWT } from "@/middlewares/AuthenticationMiddleware";
-import { updateProfile, updateAvatar } from "@/controllers/ProfileController";
+import {
+  updateProfile,
+  updateAvatar,
+  deleteAvatar,
+} from "@/controllers/ProfileController";
 import { uploadImage } from "@/middlewares/ProfileMiddlewares";
 
 dotenv.config();
@@ -100,7 +104,7 @@ const profileRoutes: Router = Router();
  *           text/plain:
  *             schema:
  *               type: string
- *               example: "错误"
+ *               example: "未找到用户"
  *       500:
  *         description: internal server error
  *         content:
@@ -112,5 +116,7 @@ const profileRoutes: Router = Router();
 profileRoutes.patch("/updateprofile", verifyJWT, updateProfile);
 
 profileRoutes.patch("/updateavatar", verifyJWT, uploadImage, updateAvatar);
+
+profileRoutes.delete("/deleteavatar", verifyJWT, deleteAvatar);
 
 export default profileRoutes;

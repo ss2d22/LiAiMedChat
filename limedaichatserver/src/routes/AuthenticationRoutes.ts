@@ -135,7 +135,7 @@ authenticationRoutes.post("/signup", signUp);
  *         description: Bad Request - Invalid email or password
  *         content:
  *           text/plain:
- *             example: "无效的电子邮件或密码"
+ *             example: "未找到用户"
  *       500:
  *         description: Internal Server Error - Authentication failed
  *         content:
@@ -205,7 +205,7 @@ authenticationRoutes.post("/signin", signIn);
  *           text/plain:
  *             schema:
  *               type: string
- *               example: "未找到电子邮件"
+ *               example: "未找到用户"
  *       500:
  *         description: Internal server error
  *         content:

@@ -91,6 +91,10 @@ const UserProfile: React.FC = () => {
       const result = (await triggerUpdateAvatar(
         reqForm
       )) as avatarUpdateResponse;
+      if (result.data.avatar && userInfo) {
+        dispatch(setUserInfo({ ...userInfo, avatar: result.data.avatar }));
+        toast.success("头像更新成功");
+      }
       console.log(result);
     }
   };
