@@ -24,11 +24,11 @@ const Chat: React.FC = () => {
   }, [userInfo, navigator]);
 
   return (
-    <div className="flex h-[100vh] text text-white overflow-hidden">
+    <section className="flex h-[100vh] text text-white overflow-hidden">
       <ChatSelectedContainer />
       <EmptyChatContainer />
       <ChatContainer />
-    </div>
+    </section>
   );
 };
 
