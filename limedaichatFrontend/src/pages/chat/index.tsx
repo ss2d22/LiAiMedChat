@@ -1,3 +1,6 @@
+import ChatContainer from "@/components/containers/ChatContainer";
+import ChatSelectedContainer from "@/components/containers/ChatSelectedContainer";
+import EmptyChatContainer from "@/components/containers/EmptyChatContainer";
 import { RootState } from "@/types";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
@@ -5,10 +8,9 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 /**
- * Placeholder for the chat page
+ * the chat page of the app uses relevant components to display the chat
+ * interface
  * @author Sriram Sundar
- *
- *
  */
 const Chat: React.FC = () => {
   const navigator = useNavigate();
@@ -22,9 +24,11 @@ const Chat: React.FC = () => {
   }, [userInfo, navigator]);
 
   return (
-    <>
-      <div>Chat</div>
-    </>
+    <div className="flex h-[100vh] text text-white overflow-hidden">
+      <ChatSelectedContainer />
+      <EmptyChatContainer />
+      <ChatContainer />
+    </div>
   );
 };
 
