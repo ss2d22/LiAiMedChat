@@ -218,6 +218,13 @@ declare type avatarDeleteResponse = avatarDelete | ErrorResponse;
  */
 declare type AuthApiResponse = AuthResponse | ErrorResponse;
 
+declare interface fetchUserInfoResponse {
+  isSuccess: boolean;
+  data: {
+    user: UserInformation;
+  };
+}
+
 // types for state management
 /**
  * User Information global state
