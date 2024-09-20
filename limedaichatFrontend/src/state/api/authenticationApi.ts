@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import {
   BACKEND_URL,
   FETCH_USER_INFO_ROUTE,
+  SIGN_OUT_ROUTE,
   SIGNIN_ROUTE,
   SIGNUP_ROUTE,
 } from "@/constants";
@@ -41,6 +42,12 @@ export const authenticationApi = createApi({
         method: "GET",
       }),
     }),
+    postSignOut: build.mutation({
+      query: () => ({
+        url: SIGN_OUT_ROUTE,
+        method: "POST",
+      }),
+    }),
   }),
 });
 
@@ -54,4 +61,5 @@ export const {
   usePostSignUpMutation,
   usePostSignInMutation,
   useGetFetchUserInfoQuery,
+  usePostSignOutMutation,
 } = authenticationApi;

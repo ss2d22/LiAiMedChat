@@ -38,6 +38,14 @@ export const SIGNIN_ROUTE = `${AUTHENTICATION_BASE_ROUTES}/signin`;
  */
 export const FETCH_USER_INFO_ROUTE = `${AUTHENTICATION_BASE_ROUTES}/fetchuserinfo`;
 
+/**
+ * url for the signout endpoint
+ * @author Sriram Sundar
+ *
+ * @type {string}
+ */
+export const SIGN_OUT_ROUTE = `${AUTHENTICATION_BASE_ROUTES}/signout`;
+
 //Profile Routes
 /**
  * base route for profile related endpoints

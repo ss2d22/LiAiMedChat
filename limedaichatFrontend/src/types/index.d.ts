@@ -180,6 +180,35 @@ declare interface avatarUpdate {
 declare type avatarUpdateResponse = avatarUpdate | ErrorResponse;
 
 /**
+ * sucess response from the signout endpoint
+ * @author Sriram Sundar
+ *
+ * @interface signOut
+ * @typedef {signOut}
+ */
+declare interface signOut {
+  /**
+   * message sayong signed out sucessfully in chinese
+   * @author Sriram Sundar
+   *
+   * @type {{
+   *     message: string;
+   *   }}
+   */
+  data: {
+    message: string;
+  };
+}
+
+/**
+ * response structure for signut endpoint with sucess or error
+ * @author Sriram Sundar
+ *
+ * @typedef {signOutResponse}
+ */
+declare type signOutResponse = signOut | ErrorResponse;
+
+/**
  * sucess resoibse for deleting avatar
  * @author Sriram Sundar
  *

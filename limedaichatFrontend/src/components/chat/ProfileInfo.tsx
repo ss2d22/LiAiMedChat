@@ -1,6 +1,6 @@
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
-import { useSelector } from "react-redux";
-import { RootState } from "@/types";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState, signOutResponse } from "@/types";
 import { getColour } from "@/utils/colours";
 import { BACKEND_URL } from "@/constants";
 import {
@@ -12,6 +12,8 @@ import {
 import { FiEdit2 } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import { IoPowerSharp } from "react-icons/io5";
+import { usePostSignOutMutation } from "@/state/api/authenticationApi";
+import { setUserInfo } from "@/state/slices/authSlice";
 
 /**
  * Profile info component that displays avatar, full name , edit profile and signout
@@ -21,10 +23,17 @@ import { IoPowerSharp } from "react-icons/io5";
 const ProfileInfo: React.FC = () => {
   const navigator = useNavigate();
   const userInfo = useSelector((state: RootState) => state.auth.userInfo);
+  const [triggerSignOut] = usePostSignOutMutation();
+  const dispatch: AppDispatch = useDispatch();
 
   const signOut = async () => {
-    console.log("hallp");
-    await signOut();
+    console.log("in signout");
+
+    const result = (await triggerSignOut({})) as signOutResponse;
+    if ("data" in result && result.data.message) {
+      navigator("/authentication");
+      dispatch(setUserInfo(undefined));
+    }
   };
 
   return (
@@ -80,7 +89,7 @@ const ProfileInfo: React.FC = () => {
             <TooltipTrigger>
               <IoPowerSharp
                 className="text-red-500 text-xl font-medium"
-                onClick={() => void signOut}
+                onClick={() => void signOut()}
               />
             </TooltipTrigger>
             <TooltipContent className="bg-[#1c1b1e] border-none text-white">
