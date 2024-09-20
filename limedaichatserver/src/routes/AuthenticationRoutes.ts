@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import {
   fetchUserInfo,
   signIn,
+  signOut,
   signUp,
 } from "@/controllers/AuthenticationController";
 import { verifyJWT } from "@/middlewares/AuthenticationMiddleware";
@@ -263,4 +264,37 @@ authenticationRoutes.post("/signin", signIn);
  */
 authenticationRoutes.get("/fetchuserinfo", verifyJWT, fetchUserInfo);
 
+/**
+ * @swagger
+ * /api/authentication/signout:
+ *   post:
+ *     summary: Sign out the current user
+ *     description: >
+ *       Signs out the current user by clearing the JWT cookie.
+ *       This effectively ends the user's session.
+ *     responses:
+ *       200:
+ *         description: User successfully signed out
+ *         headers:
+ *           Set-Cookie:
+ *             schema:
+ *               type: string
+ *               example: jwt=; Max-Age=1; Path=/; HttpOnly; Secure; SameSite=None
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "注销成功"
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           text/plain:
+ *             schema:
+ *               type: string
+ *               example: "服务器内部错误"
+ */
+authenticationRoutes.post("/signout", signOut);
 export default authenticationRoutes;

@@ -172,7 +172,7 @@ export const fetchUserInfo = async (
   }
 };
 
-export const logout = async (request: Request, response: Response) => {
+export const signOut = async (request: Request, response: Response) => {
   try {
     response.cookie("jwt", "", { maxAge: 1, secure: true, sameSite: "none" });
     response.status(200).json({
