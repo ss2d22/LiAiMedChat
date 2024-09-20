@@ -1,5 +1,6 @@
 import { books } from "@/assets";
 import Title from "@/components/Title";
+import ProfileInfo from "../profileInfo";
 
 /**
  * chat selection side bar component
@@ -24,6 +25,7 @@ const ChatSelectedContainer : React.FC = () => {
           <Title text="更新 / 公告" />
         </div>
       </div>
+      <ProfileInfo />
     </section>
   );
 };
