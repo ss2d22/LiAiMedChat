@@ -8,7 +8,8 @@ import {
 
 //TODO: update payload config and body to match the server after setting up state management
 /**
- * endpoints of apis from the backend to be used in the frontend using react redux
+ * authentication related endpoints for the apis from the backend to be used
+ * in the frontend using react redux
  * @author Sriram Sundar
  *
  */
@@ -44,7 +45,8 @@ export const authenticationApi = createApi({
 });
 
 /**
- * hook to use the postSignUp mutation from react redux
+ * hooks to use the apis defined in this file using
+ * react redux
  * @author Sriram Sundar
  *
  */

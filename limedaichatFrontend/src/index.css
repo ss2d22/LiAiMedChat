@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@200..900&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -66,4 +68,11 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.noto-serif-sc-normal {
+  font-family: "Noto Serif SC", serif;
+  font-optical-sizing: auto;
+  font-weight: 200;
+  font-style: normal;
 }

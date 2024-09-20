@@ -14,7 +14,7 @@ import { AppDispatch, AuthApiResponse } from "@/types";
 import { useNavigate } from "react-router-dom";
 
 /**
- * Authentication component that allows users to sign in or sign up
+ * Authentication page that allows users to sign in or sign up
  * @author Sriram Sundar
  */
 const Auth: React.FC = () => {

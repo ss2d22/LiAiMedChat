@@ -367,3 +367,21 @@ export interface RouterProps {
    */
   children: ReactNode;
 }
+
+/**
+ * props for the resuable title component
+ * @author Sriram Sundar
+ *
+ * @export
+ * @interface TitleProps
+ * @typedef {TitleProps}
+ */
+export interface TitleProps {
+  /**
+   * text to be displayed on the title
+   * @author Sriram Sundar
+   *
+   * @type {string}
+   */
+  text: string;
+}
