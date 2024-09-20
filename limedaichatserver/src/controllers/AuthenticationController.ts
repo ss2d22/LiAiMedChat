@@ -131,7 +131,6 @@ export const signIn = async (
   }
 };
 
-
 /**
  * fetches user info from database (only to be used in conjunction with the jwt verification middleware)
  * handles cases where user is not found with a status code 404, 500 for internal server error and status
@@ -166,6 +165,18 @@ export const fetchUserInfo = async (
         avatar: userData.avatar,
         theme: userData.theme,
       },
+    });
+  } catch (error) {
+    console.error(error);
+    return response.status(500).send("服务器内部错误");
+  }
+};
+
+export const logout = async (request: Request, response: Response) => {
+  try {
+    response.cookie("jwt", "", { maxAge: 1, secure: true, sameSite: "none" });
+    response.status(200).json({
+      message: "注销成功",
     });
   } catch (error) {
     console.error(error);
