@@ -244,6 +244,49 @@
         }
       }
     },
+    "/api/authentication/signout": {
+      "post": {
+        "summary": "Sign out the current user",
+        "description": "Signs out the current user by clearing the JWT cookie. This effectively ends the user's session.\n",
+        "responses": {
+          "200": {
+            "description": "User successfully signed out",
+            "headers": {
+              "Set-Cookie": {
+                "schema": {
+                  "type": "string",
+                  "example": "jwt=; Max-Age=1; Path=/; HttpOnly; Secure; SameSite=None"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "注销成功"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "example": "服务器内部错误"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/profile/updateprofile": {
       "patch": {
         "summary": "Update the user's profile information",

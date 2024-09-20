@@ -223,7 +223,7 @@ const UserProfile: React.FC = () => {
         <div className="w-full">
           <Button
             className="h-16 w-full bg-purple-700 hover:bg-purple-900 transition-all duration-300"
-            onClick={() => void saveChanges}
+            onClick={() => void saveChanges()}
           >
             保存更改
           </Button>
