@@ -1,6 +1,7 @@
 import ChatContainer from "@/components/chat/containers/ChatContainer";
 import ChatSelectedContainer from "@/components/chat/containers/ChatSelectedContainer";
 import EmptyChatContainer from "@/components/chat/containers/EmptyChatContainer";
+import { selectCurrentChat } from "@/state/slices/chatSlice";
 import { RootState } from "@/types";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
@@ -14,7 +15,10 @@ import { toast } from "sonner";
  */
 const Chat: React.FC = () => {
   const navigator = useNavigate();
+  //TODO: refactor to be similar to chatdata global store using the
+  //the stuff i just learnt to make it more readable
   const userInfo = useSelector((state: RootState) => state.auth.userInfo);
+  const selectedChatData = useSelector(selectCurrentChat);
 
   useEffect(() => {
     if (!userInfo?.configuredProfile) {
@@ -26,8 +30,11 @@ const Chat: React.FC = () => {
   return (
     <section className="flex h-[100vh] text text-white overflow-hidden">
       <ChatSelectedContainer />
-      <ChatContainer />
-      {/* <EmptyChatContainer /> */}
+      {selectedChatData === undefined ? (
+        <EmptyChatContainer />
+      ) : (
+        <ChatContainer />
+      )}
     </section>
   );
 };

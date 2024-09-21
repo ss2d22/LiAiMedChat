@@ -16,16 +16,27 @@ import { Input } from "@/components/ui/input";
 import { animationOptions } from "@/utils/animationOptions";
 import Lottie from "react-lottie";
 import { usePostSearchTextbooksMutation } from "@/state/api/textbookApi";
-import { searchTextbookResponse, Textbook } from "@/types";
+import { ChatType, searchTextbookResponse, Textbook } from "@/types";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarImage } from "../ui/avatar";
 import { books } from "@/assets";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/types";
+import {
+  setSelectedChatType,
+  setSelectedChatData,
+} from "@/state/slices/chatSlice";
 
-const NewChat = () => {
+/**
+ * New chat component that allows user to searcha and select a new chat
+ * @author Sriram Sundar
+ */
+const NewChat: React.FC = () => {
   const [newChatModal, setNewChatModal] = useState<boolean>(false);
 
   const [searchedTextbooks, setSearchedTextbooks] = useState<Textbook[]>([]);
   const [triggerSearchTextbooks] = usePostSearchTextbooksMutation();
+  const dispatch: AppDispatch = useDispatch();
 
   const searchTextbooks = async (bookName: string) => {
     console.log("searching...");
@@ -47,6 +58,14 @@ const NewChat = () => {
         setSearchedTextbooks([]);
       }
     }
+  };
+
+  const selectNewTextbook = (textbook: Textbook) => {
+    setNewChatModal(false);
+    dispatch(setSelectedChatType("textbook" as ChatType));
+    dispatch(setSelectedChatData(textbook));
+    console.log(textbook);
+    setSearchedTextbooks([]);
   };
   return (
     <>
@@ -78,11 +97,12 @@ const NewChat = () => {
           </div>
           <ScrollArea className="h-[250px]">
             <div className="flex flex-col gap-5">
-              {searchedTextbooks.map((texbook, index) => {
+              {searchedTextbooks.map((textbook, index) => {
                 return (
                   <div
                     key={index}
                     className="flex gap-3 items-center cursor-pointer"
+                    onClick={() => void selectNewTextbook(textbook)}
                   >
                     <div className="w-12 h-12 relative">
                       <Avatar className="h-12 w-12 rounded-full overflow-hidden \">
@@ -96,8 +116,8 @@ const NewChat = () => {
                       </Avatar>
                     </div>
                     <div className="flex flex-col">
-                      <span>{texbook ? `${texbook.title}` : ""}</span>
-                      <span className="text-xs">{texbook.description}</span>
+                      <span>{textbook ? `${textbook.title}` : ""}</span>
+                      <span className="text-xs">{textbook.description}</span>
                     </div>
                   </div>
                 );
