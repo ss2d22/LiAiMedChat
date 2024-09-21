@@ -127,3 +127,13 @@ export const selectChatLoading = (state: { chat: ChatState }) =>
  * @returns {string | null} The error message, if any, or null
  */
 export const selectChatError = (state: { chat: ChatState }) => state.chat.error;
+
+/**
+ * Selector to get the type of the currently selected chat from the Redux store
+ * @author Sriram Sundar
+ *
+ * @param {{ chat: ChatState }} state - The Redux state
+ * @returns {ChatType | undefined} The type of the currently selected chat
+ */
+export const selectChatType = (state: { chat: ChatState }) =>
+  state.chat.selectedChatType;
