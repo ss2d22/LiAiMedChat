@@ -19,6 +19,6 @@ const textbookRoutes: Router = Router();
  *
  *
  */
-textbookRoutes.get("/searchtextbooks", verifyJWT, searchTextbooks);
+textbookRoutes.post("/searchtextbooks", verifyJWT, searchTextbooks);
 
 export default textbookRoutes;

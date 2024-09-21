@@ -43,6 +43,10 @@ export const searchTextbooks = async (
       $or: [{ title: regex }, { description: regex }, { author: regex }],
     });
 
+    textbooks.forEach((textbook) => {
+      textbook.vectorStorePath = null;
+      textbook.textFilePath = null;
+    });
     return response.status(200).json({
       textbooks: textbooks,
     });

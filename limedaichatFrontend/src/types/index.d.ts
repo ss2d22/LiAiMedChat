@@ -6,7 +6,6 @@ import { ReactNode } from "react";
 // Types will be defined here
 
 //api error Types
-
 /**
  * Error response structure for the api endpoints from the LiMedAi Server
  * @author Sriram Sundar
@@ -208,6 +207,66 @@ declare interface signOut {
  */
 declare type signOutResponse = signOut | ErrorResponse;
 
+/**
+ * Represents structure of the textbook as per the mongoose model
+ * (excluding the stuff that is filtered out when sending the
+ * response to the frotend)
+ * @author Sriram Sundar
+ *
+ * @interface Textbook
+ * @typedef {Textbook}
+ */
+declare interface Textbook {
+  /**
+   * title of the book
+   * @author Sriram Sundar
+   *
+   * @type {string}
+   */
+  title: string;
+  /**
+   * author of the book
+   * @author Sriram Sundar
+   *
+   * @type {string}
+   */
+  author: string;
+  /**
+   * description of the book
+   * @author Sriram Sundar
+   *
+   * @type {string}
+   */
+  description: string;
+}
+/**
+ * sucessful esponse structure for search textbooks endpoint
+ * @author Sriram Sundar
+ *
+ * @interface searchTextbook
+ * @typedef {searchTextbook}
+ */
+declare interface searchTextbook {
+  /**
+   * response structure for search textbooks endpoint
+   * @author Sriram Sundar
+   *
+   * @type {{
+   *     textbooks: string;
+   *   }}
+   */
+  data: {
+    textbooks: Textbook[];
+  };
+}
+
+/**
+ * response structure for search textbook endpoint taking error responses into account
+ * @author Sriram Sundar
+ *
+ * @typedef {searchTextbookResponse}
+ */
+declare type searchTextbookResponse = searchTextbook | ErrorResponse;
 /**
  * sucess resoibse for deleting avatar
  * @author Sriram Sundar

@@ -79,4 +79,20 @@ export const UPDATE_AVATAR_ROUTE = `${PROFILE_BASE_ROUTES}/updateavatar`;
  */
 export const DELETE_AVATAR_ROUTE = `${PROFILE_BASE_ROUTES}/deleteavatar`;
 
+//Textbook Routes
+/**
+ * base route for endpoints related to textbooks
+ * @author Sriram Sundar
+ *
+ * @type {"/api/textbooks"}
+ */
+export const TEXTBOOKS_BASE_ROUTE = "/api/textbooks";
+/**
+ * endpoint for searching textbooks
+ * @author Sriram Sundar
+ *
+ * @type {string}
+ */
+export const SEARCH_TEXTBOOKS_ROUTE = `${TEXTBOOKS_BASE_ROUTE}/searchtextbooks`;
+
 //Chat Routes
