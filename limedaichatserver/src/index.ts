@@ -8,6 +8,7 @@ import morgan from "morgan";
 import profileRoutes from "@/routes/ProfileRoutes";
 import path from "path";
 import textbookRoutes from "./routes/TextBookRoutes";
+import socketSetup from "./utils/socketSetup";
 
 // setup server
 dotenv.config();
@@ -66,7 +67,7 @@ app.get("/", (request: Request, response: Response) => {
   response.status(200).send("server for limedai chat app");
 });
 
-//start server and connect to mongodb
+//start server, serup socket and connect to mongodb
 app
   .listen(PORT, () => {
     console.log("Server running at PORT: ", PORT);
@@ -75,6 +76,8 @@ app
     // gracefully handle the error
     throw new Error(error.message);
   });
+
+socketSetup(app);
 
 mongoose
   .connect(MONGO_URI)
