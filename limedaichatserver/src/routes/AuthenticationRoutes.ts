@@ -297,4 +297,5 @@ authenticationRoutes.get("/fetchuserinfo", verifyJWT, fetchUserInfo);
  *               example: "服务器内部错误"
  */
 authenticationRoutes.post("/signout", signOut);
+
 export default authenticationRoutes;

@@ -7,6 +7,7 @@ import authenticationRoutes from "@/routes/AuthenticationRoutes";
 import morgan from "morgan";
 import profileRoutes from "@/routes/ProfileRoutes";
 import path from "path";
+import textbookRoutes from "./routes/TextBookRoutes";
 
 // setup server
 dotenv.config();
@@ -58,6 +59,7 @@ app.use(morgan("combined"));
 //use routes
 app.use("/api/authentication", authenticationRoutes);
 app.use("/api/profile", profileRoutes);
+app.use("/api/textbooks", textbookRoutes);
 
 //get on / route with fun text hahaha
 app.get("/", (request: Request, response: Response) => {

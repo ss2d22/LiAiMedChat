@@ -47,6 +47,7 @@ declare interface Request extends e.Request {
     lastName?: string;
     avatar?: string;
     theme?: number;
+    textbook?: string;
   };
 }
 
