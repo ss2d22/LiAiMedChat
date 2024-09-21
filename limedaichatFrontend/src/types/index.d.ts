@@ -3,6 +3,7 @@ import { store } from "@/state/store";
 import { SerializedError } from "@reduxjs/toolkit";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { ReactNode } from "react";
+import { textbooksApi } from "@/state/api/textbookApi";
 // Types will be defined here
 
 //api error Types
@@ -38,7 +39,6 @@ declare interface ErrorResponse {
 export interface AuthenticationApi {
   /**
    * Post request for sign up endpoint from the LiMedAi Server
-   * https://bump.sh/sriramprojects/doc/limedai/operation/operation-post-api-authentication-signup
    * @author Sriram Sundar
    *
    * @type {{
@@ -56,7 +56,6 @@ export interface AuthenticationApi {
   };
   /**
    * Post request for sign in endpoint from the LiMedAi Server
-   * https://bump.sh/sriramprojects/doc/limedai/operation/operation-post-api-authentication-signin
    * @author Sriram Sundar
    *
    * @type {{
@@ -414,19 +413,36 @@ declare interface AuthState {
  */
 declare interface RootState {
   /**
-   * auth state in the store from auth slice
+   * Auth state in the store from auth slice
    * @author Sriram Sundar
    *
    * @type {AuthState}
    */
   auth: AuthState;
+
   /**
-   * authentication api reducer path in store
+   * Authentication API reducer path in store
    * @author Sriram Sundar
    *
    * @type {ReturnType<typeof authenticationApi.reducer>}
    */
   [authenticationApi.reducerPath]: ReturnType<typeof authenticationApi.reducer>;
+
+  /**
+   * Chat state in the store from chat slice
+   * @author Sriram Sundar
+   *
+   * @type {ChatState}
+   */
+  chat: ChatState;
+
+  /**
+   * textbooksApi reducer path in store
+   * @author Sriram Sundar
+   *
+   * @type {ReturnType<typeof chatApi.reducer>}
+   */
+  [textbooksApi.reducerPath]?: ReturnType<typeof textbooksApi.reducer>;
 }
 
 /**
@@ -472,4 +488,118 @@ export interface TitleProps {
    * @type {string}
    */
   text: string;
+}
+
+/**
+ * types of chats
+ * @author Sriram Sundar
+ *
+ * @export
+ * @enum {number}
+ */
+export enum ChatType {
+  TEXTBOOK = "textbook",
+  ANNOUNCEMENTS = "announcements",
+}
+
+/**
+ * Chat data Structure
+ * @author Sriram Sundar
+ *
+ * @export
+ * @interface ChatData
+ * @typedef {ChatData}
+ */
+export type ChatData = Textbook;
+
+/**
+ * chat message structure (update as needed just a prediction for
+ * what it might look like)
+ * @author Sriram Sundar
+ *
+ * @export
+ * @interface ChatMessage
+ * @typedef {ChatMessage}
+ */
+export interface ChatMessage {
+  /**
+   * id of message
+   * @author Sriram Sundar
+   *
+   * @type {string}
+   */
+  id: string;
+  /**
+   * sender id
+   * @author Sriram Sundar
+   *
+   * @type {string}
+   */
+  senderId: string;
+  /**
+   * content of the message
+   * @author Sriram Sundar
+   *
+   * @type {string}
+   */
+  content: string;
+  /**
+   * timestamp of the message
+   * @author Sriram Sundar
+   *
+   * @type {Date}
+   */
+  timestamp: Date;
+  /**
+   * wether the message has been read or not
+   * @author Sriram Sundar
+   *
+   * @type {boolean}
+   */
+  read: boolean;
+}
+
+/**
+ * state of the chat
+ * @author Sriram Sundar
+ *
+ * @interface ChatState
+ * @typedef {ChatState}
+ */
+interface ChatState {
+  /**
+   * possible states of chat type
+   * @author Sriram Sundar
+   *
+   * @type {(ChatType | undefined)}
+   */
+  selectedChatType: ChatType | undefined;
+  /**
+   * possible states of chat data
+   * @author Sriram Sundar
+   *
+   * @type {(ChatData | undefined)}
+   */
+  selectedChatData: ChatData | undefined;
+  /**
+   * possible states of chat messages
+   * @author Sriram Sundar
+   *
+   * @type {ChatMessage[]}
+   */
+  selectedChatMessages: ChatMessage[];
+  /**
+   * loading state
+   * @author Sriram Sundar
+   *
+   * @type {boolean}
+   */
+  isLoading: boolean;
+  /**
+   * possible states of error
+   * @author Sriram Sundar
+   *
+   * @type {(string | null)}
+   */
+  error: string | null;
 }
