@@ -95,35 +95,37 @@ const NewChat: React.FC = () => {
               onChange={(e) => void searchTextbooks(e.target.value)}
             />
           </div>
-          <ScrollArea className="h-[250px]">
-            <div className="flex flex-col gap-5">
-              {searchedTextbooks.map((textbook, index) => {
-                return (
-                  <div
-                    key={index}
-                    className="flex gap-3 items-center cursor-pointer"
-                    onClick={() => void selectNewTextbook(textbook)}
-                  >
-                    <div className="w-12 h-12 relative">
-                      <Avatar className="h-12 w-12 rounded-full overflow-hidden \">
-                        <>
-                          <AvatarImage
-                            src={books}
-                            alt="books icon"
-                            className="object-cover w-full h-full bg-black"
-                          />
-                        </>
-                      </Avatar>
+          {searchedTextbooks.length > 0 && (
+            <ScrollArea className="h-[250px]">
+              <div className="flex flex-col gap-5">
+                {searchedTextbooks.map((textbook, index) => {
+                  return (
+                    <div
+                      key={index}
+                      className="flex gap-3 items-center cursor-pointer"
+                      onClick={() => void selectNewTextbook(textbook)}
+                    >
+                      <div className="w-12 h-12 relative">
+                        <Avatar className="h-12 w-12 rounded-full overflow-hidden \">
+                          <>
+                            <AvatarImage
+                              src={books}
+                              alt="books icon"
+                              className="object-cover w-full h-full bg-black"
+                            />
+                          </>
+                        </Avatar>
+                      </div>
+                      <div className="flex flex-col">
+                        <span>{textbook ? `${textbook.title}` : ""}</span>
+                        <span className="text-xs">{textbook.description}</span>
+                      </div>
                     </div>
-                    <div className="flex flex-col">
-                      <span>{textbook ? `${textbook.title}` : ""}</span>
-                      <span className="text-xs">{textbook.description}</span>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </ScrollArea>
+                  );
+                })}
+              </div>
+            </ScrollArea>
+          )}
           {searchedTextbooks.length <= 0 && (
             <div className="flex-1 md:flex mt-5 flex-col justify-center items-center duration-1000 transition-all">
               <Lottie
