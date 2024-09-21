@@ -1,5 +1,6 @@
 import e from "express";
 import { JwtPayload } from "jsonwebtoken";
+import {Document} from "mongoose"
 
 /**
  * type for Email

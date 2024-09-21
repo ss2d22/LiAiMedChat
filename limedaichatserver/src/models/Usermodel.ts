@@ -42,6 +42,9 @@ const userSchema: mongoose.Schema = new mongoose.Schema({
 
 //TODO: make it more securre
 userSchema.pre<IUserSchema>("save", async function (next) {
+  if (!this.isModified("password")) {
+    return next();
+  }
   try {
     const salt = await genSalt(10);
     this.password = await hash(this.password as string, salt);

@@ -17,7 +17,7 @@ const swaggerOptions: swaggerJsDoc.Options = {
     openapi: "3.0.0",
     info: {
       title: "LiMedAi API Documentation",
-      version: "1.0.1",
+      version: "1.0.7",
       description: "API documentation for LiMedAi server for refrence",
     },
     host: `http://localhost:xxxx`,

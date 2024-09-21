@@ -15,14 +15,38 @@ import {
 import { Input } from "@/components/ui/input";
 import { animationOptions } from "@/utils/animationOptions";
 import Lottie from "react-lottie";
+import { usePostSearchTextbooksMutation } from "@/state/api/textbookApi";
+import { searchTextbookResponse, Textbook } from "@/types";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Avatar, AvatarImage } from "../ui/avatar";
+import { books } from "@/assets";
 
 const NewChat = () => {
-  const [newChatModal, setNewChatModal] = useState(false);
-  const [searchedTextbooks, setSearchedTextbooks] = useState([]);
+  const [newChatModal, setNewChatModal] = useState<boolean>(false);
+
+  const [searchedTextbooks, setSearchedTextbooks] = useState<Textbook[]>([]);
+  const [triggerSearchTextbooks] = usePostSearchTextbooksMutation();
 
   const searchTextbooks = async (bookName: string) => {
+    console.log("searching...");
     console.log(bookName);
-    await searchTextbooks("placeholderFunctions");
+
+    console.log(bookName.length);
+
+    if (bookName.length > 0) {
+      console.log("starting server process");
+
+      const result = (await triggerSearchTextbooks({
+        textbook: bookName,
+      })) as searchTextbookResponse;
+      console.log(result);
+
+      if ("data" in result && result.data.textbooks) {
+        setSearchedTextbooks(result.data.textbooks);
+      } else {
+        setSearchedTextbooks([]);
+      }
+    }
   };
   return (
     <>
@@ -52,6 +76,34 @@ const NewChat = () => {
               onChange={(e) => void searchTextbooks(e.target.value)}
             />
           </div>
+          <ScrollArea className="h-[250px]">
+            <div className="flex flex-col gap-5">
+              {searchedTextbooks.map((texbook, index) => {
+                return (
+                  <div
+                    key={index}
+                    className="flex gap-3 items-center cursor-pointer"
+                  >
+                    <div className="w-12 h-12 relative">
+                      <Avatar className="h-12 w-12 rounded-full overflow-hidden \">
+                        <>
+                          <AvatarImage
+                            src={books}
+                            alt="books icon"
+                            className="object-cover w-full h-full bg-black"
+                          />
+                        </>
+                      </Avatar>
+                    </div>
+                    <div className="flex flex-col">
+                      <span>{texbook ? `${texbook.title}` : ""}</span>
+                      <span className="text-xs">{texbook.description}</span>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </ScrollArea>
           {searchedTextbooks.length <= 0 && (
             <div className="flex-1 md:flex mt-5 flex-col justify-center items-center duration-1000 transition-all">
               <Lottie
