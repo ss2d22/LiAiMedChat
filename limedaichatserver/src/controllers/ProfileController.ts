@@ -21,10 +21,8 @@ export const updateProfile = async (
 ): Promise<Response> => {
   try {
     const { userId, firstName, lastName, theme } = request.body;
-    console.log(request.body);
 
     if (!firstName || !lastName) {
-      console.log("in 400");
 
       return response.status(400).send("名字、姓氏和主题均为必填项");
     }
@@ -75,7 +73,6 @@ export const updateAvatar = async (
 ): Promise<Response> => {
   try {
     const { userId } = request.body;
-    console.log(request.body);
 
     if (!request.file) {
       return response.status(400).send("需要上传图片");
@@ -92,10 +89,8 @@ export const updateAvatar = async (
       { new: true, runValidators: true }
     );
 
-    console.log(userData);
 
     if (!userData) {
-      console.log("in 404");
 
       return response.status(404).send("未找到用户");
     }
@@ -124,11 +119,9 @@ export const deleteAvatar = async (
 ): Promise<Response> => {
   try {
     const { userId } = request.body;
-    console.log(request.body);
 
     const userData = await User.findById(userId);
     if (!userData) {
-      console.log("in 404");
       return response.status(404).send("未找到用户错误");
     }
 

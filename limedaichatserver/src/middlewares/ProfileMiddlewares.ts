@@ -23,7 +23,6 @@ export const uploadImage = (
   const upload = uploader.single("avatar");
 
   upload(request, response, (err) => {
-    console.log("in uploadImage");
 
     if (err) {
       console.error(err);
@@ -31,7 +30,6 @@ export const uploadImage = (
     }
 
     if (!request.file) {
-      console.log("no file uploaded");
 
       return response.status(400).send("没有文件被上传");
     }
@@ -39,7 +37,6 @@ export const uploadImage = (
     request.body.userId = id;
     const userId = request.body.userId;
     if (!userId) {
-      console.log("no userId");
       return response.status(400).send("用户ID不存在");
     }
 

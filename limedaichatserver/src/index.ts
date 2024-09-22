@@ -68,7 +68,7 @@ app.get("/", (request: Request, response: Response) => {
 });
 
 //start server, serup socket and connect to mongodb
-app
+const server = app
   .listen(PORT, () => {
     console.log("Server running at PORT: ", PORT);
   })
@@ -77,7 +77,7 @@ app
     throw new Error(error.message);
   });
 
-socketSetup(app);
+socketSetup(server);
 
 mongoose
   .connect(MONGO_URI)
