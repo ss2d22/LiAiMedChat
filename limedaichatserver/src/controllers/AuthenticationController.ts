@@ -98,21 +98,15 @@ export const signIn = async (
   try {
     const { email, password } = request.body;
     if (!email || !password) {
-      console.log("no email or pass");
-
       return response.status(400).send("需要电子邮件和密码");
     }
     const user = await User.findOne({ email });
-    console.log(user);
-
     if (!user) {
       return response.status(400).send("未找到电子邮件");
     }
 
     const auth = await compare(password, user.password);
     if (!auth) {
-      console.log("pass fail");
-
       return response.status(400).send("密码错误");
     }
     response.cookie("jwt", createJWT(email, user.id), {

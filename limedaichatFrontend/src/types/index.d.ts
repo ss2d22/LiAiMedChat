@@ -603,3 +603,20 @@ interface ChatState {
    */
   error: string | null;
 }
+
+/**
+ * SocketProviderProps for the socket provider component
+ * @author Sriram Sundar
+ *
+ * @interface SocketProviderProps
+ * @typedef {SocketProviderProps}
+ */
+interface SocketProviderProps {
+  /**
+   * children passed in to be rendered if conditions are met
+   * @author Sriram Sundar
+   *
+   * @type {ReactNode}
+   */
+  children: ReactNode;
+}

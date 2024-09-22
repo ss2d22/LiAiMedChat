@@ -1,4 +1,4 @@
-import { Socket, Server as SocketIOServer } from "socket.io";
+import { Server, Socket, Server as SocketIOServer } from "socket.io";
 import { Server as HttpServer } from "http";
 import { Application } from "express";
 
@@ -10,10 +10,8 @@ import { Application } from "express";
  * @param {Application} app
  * @returns {SocketIOServer}
  */
-const socketSetup = (app: Application): SocketIOServer => {
-  const httpServer: HttpServer = new HttpServer(app);
-
-  const io: SocketIOServer = new SocketIOServer(httpServer, {
+const socketSetup = (app: HttpServer): SocketIOServer => {
+  const io: SocketIOServer = new SocketIOServer(app, {
     cors: {
       origin: process.env.FRONT_ORIGIN as string,
       //TODO: update methods to only include what is used after completion

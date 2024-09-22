@@ -22,7 +22,6 @@ export const verifyJWT = (
   response: Response,
   next: NextFunction
 ): void | Response<string> => {
-  console.log("in verifyJWT");
 
   const token = request.cookies.jwt;
   if (!token) return response.status(401).send("您未通过身份验证");
@@ -38,11 +37,8 @@ export const verifyJWT = (
         response.status(403).send("无效的令牌");
       } else {
         if (payload && typeof payload !== "string") {
-          console.log("in verifyJWT payload assigning id");
-          console.log(payload);
 
           request.body.userId = (payload as JwtPayload).id;
-          console.log(request.body.userId);
         }
         next();
       }

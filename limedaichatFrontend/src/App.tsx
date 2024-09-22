@@ -7,7 +7,7 @@ import { fetchUserInfoResponse, RootState, RouterProps } from "@/types";
 import { useDispatch } from "react-redux";
 import { setUserInfo } from "@/state/slices/authSlice";
 import { AppDispatch } from "@/types";
-import { useEffectAsync } from "@/utils/useEffectAsync";
+import { useEffectAsync } from "@/hooks/useEffectAsync";
 import { useState } from "react";
 import { useGetFetchUserInfoQuery } from "./state/api/authenticationApi";
 
