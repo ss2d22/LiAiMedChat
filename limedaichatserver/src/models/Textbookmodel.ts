@@ -1,12 +1,13 @@
-import mongoose from "mongoose";
+import { ITextbook } from "@/types";
+import mongoose, { Schema, Model } from "mongoose";
 
 /**
- * schema for storing the textbook information
+ * Schema for storing the textbook information
  * @author Sriram Sundar
  *
- * @type {mongoose.Schema}
+ * @type {Schema<ITextbook>}
  */
-const textbookSchema: mongoose.Schema = new mongoose.Schema({
+const textbookSchema: Schema<ITextbook> = new Schema({
   title: { type: String, required: true },
   author: { type: String, required: true },
   description: { type: String },
@@ -15,11 +16,14 @@ const textbookSchema: mongoose.Schema = new mongoose.Schema({
 });
 
 /**
- * mongoose model for the textbook schema
+ * Mongoose model for the textbook schema
  * @author Sriram Sundar
  *
- * @type {*}
+ * @type {Model<ITextbook>}
  */
-const Textbook = mongoose.model("Textbook", textbookSchema);
+const Textbook: Model<ITextbook> = mongoose.model<ITextbook>(
+  "Textbook",
+  textbookSchema
+);
 
 export default Textbook;

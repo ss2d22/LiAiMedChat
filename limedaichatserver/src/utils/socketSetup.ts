@@ -1,29 +1,32 @@
-import { Server, Socket, Server as SocketIOServer } from "socket.io";
-import { Server as HttpServer } from "http";
-import { Application } from "express";
+import { Socket, Server as SocketIOServer } from "socket.io";
+import { Server } from "http";
+import { UserSocketMap } from "@/types";
+import { handleSendMessage } from "@/controllers/messageController";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 /**
  * socketSetup is a function that sets up the socket server and
  * returns the socketIoServer
  * @author Sriram Sundar
  *
- * @param {Application} app
+ * @param {Server} - express server
  * @returns {SocketIOServer}
  */
-const socketSetup = (app: HttpServer): SocketIOServer => {
-  const io: SocketIOServer = new SocketIOServer(app, {
+const setupSocket = (server: Server): SocketIOServer => {
+  const io = new SocketIOServer(server, {
     cors: {
-      origin: process.env.FRONT_ORIGIN as string,
-      //TODO: update methods to only include what is used after completion
-      methods: ["GET", "POST", "PATCH", "DELETE", "PUT"],
+      origin: process.env.FRONT_ORIGIN,
+      methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
       credentials: true,
     },
   });
 
-  const userSocketMap: Map<string, string> = new Map();
+  const userSocketMap: UserSocketMap = new Map();
 
-  const disconnectUser = (socket: Socket) => {
-    console.log(`User ${socket.id} disconnected`);
+  const disconnect = (socket: Socket) => {
+    console.log("disconnected", socket.id);
     for (const [userId, socketId] of userSocketMap.entries()) {
       if (socketId === socket.id) {
         userSocketMap.delete(userId);
@@ -32,21 +35,23 @@ const socketSetup = (app: HttpServer): SocketIOServer => {
     }
   };
 
-  io.on("connection", (socket) => {
-    console.log("A user connected");
+  io.on("connection", (socket: Socket) => {
     const userId = socket.handshake.query.userId as string;
+
     if (userId) {
       userSocketMap.set(userId, socket.id);
-      console.log(`User ${userId} connected`);
+      console.log(`User connected: ${userId} with socket ID: ${socket.id}`);
     } else {
-      console.error("User not connected as id not provided");
+      console.log("user id missing.");
     }
 
-    socket.on("disconnect", () => disconnectUser(socket));
+    socket.on("sendMessage", (message) =>
+      handleSendMessage(io, userSocketMap, message)
+    );
+    socket.on("disconnect", () => disconnect(socket));
   });
-  console.log("Socket server setup");
 
   return io;
 };
 
-export default socketSetup;
+export default setupSocket;
