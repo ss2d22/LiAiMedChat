@@ -1,0 +1,19 @@
+services:
+  app:
+    build: .
+    ports:
+      - "3117:3117"
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    depends_on:
+      - db
+    environment:
+      - MONGODB_URI=mongodb://db:27017/limedaichat-app
+  db:
+    image: mongo
+    volumes:
+      - mongodb_data:/data/db
+
+volumes:
+  mongodb_data:
