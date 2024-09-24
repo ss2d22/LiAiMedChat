@@ -1,7 +1,11 @@
 import { Router } from "express";
 import dotenv from "dotenv";
 import { verifyJWT } from "@/middlewares/AuthenticationMiddleware";
-import { searchTextbooks } from "@/controllers/TextBookController";
+import {
+  getAllTextbooks,
+  getTextbooksForList,
+  searchTextbooks,
+} from "@/controllers/TextBookController";
 dotenv.config();
 
 /**
@@ -90,5 +94,9 @@ const textbookRoutes: Router = Router();
  *               example: "服务器内部错误"
  */
 textbookRoutes.post("/searchtextbooks", verifyJWT, searchTextbooks);
+
+textbookRoutes.get("/gettextbooksforlist", verifyJWT, getTextbooksForList);
+
+textbookRoutes.get("/getalltextbooks", verifyJWT, getAllTextbooks);
 
 export default textbookRoutes;

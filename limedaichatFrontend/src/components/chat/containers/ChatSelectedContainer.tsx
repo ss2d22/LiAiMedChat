@@ -2,6 +2,12 @@ import { books } from "@/assets";
 import Title from "@/components/Title";
 import ProfileInfo from "../profileInfo";
 import NewChat from "../NewChat";
+import { useEffectAsync } from "@/hooks/useEffectAsync";
+import { useGetGetTextbooksForListQuery } from "@/state/api/textbookApi";
+import { AppDispatch, Textbook } from "@/types";
+import { useDispatch, useSelector } from "react-redux";
+import { selectTextbooks, setTextbooks } from "@/state/slices/chatSlice";
+import TextbookList from "@/components/TextbookList";
 
 /**
  * chat selection side bar component
@@ -9,6 +15,16 @@ import NewChat from "../NewChat";
  *
  */
 const ChatSelectedContainer: React.FC = () => {
+  const { refetch } = useGetGetTextbooksForListQuery({});
+  const dispatch: AppDispatch = useDispatch();
+  const textbooks = useSelector(selectTextbooks);
+
+  useEffectAsync(async () => {
+    const result = await refetch();
+    if (result.data && "textbooks" in result.data) {
+      dispatch(setTextbooks(result.data.textbooks as Textbook[]));
+    }
+  }, []);
   return (
     <section className="relative md:w-[35vw] lg:[30vw] xl:w-[20vw] bg-[#1b1c24] border-r-2 border-[#2f303b] w-full">
       {/* TODO: second time using the same thing need to refactor to component */}
@@ -20,6 +36,9 @@ const ChatSelectedContainer: React.FC = () => {
         <div className="flex items-center justify-between pr-10">
           <Title text="与课本的聊天记录" />
           <NewChat />
+        </div>
+        <div className="max-h-[38vh] overflow-y-auto scrollbar-hidden">
+          <TextbookList textbooks={textbooks} />
         </div>
       </div>
       <div className="my-5">

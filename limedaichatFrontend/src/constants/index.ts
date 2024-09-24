@@ -95,9 +95,9 @@ export const TEXTBOOKS_BASE_ROUTE = "/api/textbooks";
  */
 export const SEARCH_TEXTBOOKS_ROUTE = `${TEXTBOOKS_BASE_ROUTE}/searchtextbooks`;
 
+export const GET_TEXTBOOKS_FOR_LIST_ROUTE = `${TEXTBOOKS_BASE_ROUTE}/gettextbooksforlist`;
 //Messages Routes
 
 export const MESSAGES_BASE_ROUTE = "/api/messages";
 
 export const FETCH_MESSAGES_ROUTE = `${MESSAGES_BASE_ROUTE}/fetchmessages`;
-
