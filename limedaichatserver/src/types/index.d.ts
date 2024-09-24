@@ -51,6 +51,7 @@ declare interface Request extends e.Request {
     theme?: number;
     textbook?: string;
     textbookId?: string;
+    receiverModel?: string;
   };
 }
 

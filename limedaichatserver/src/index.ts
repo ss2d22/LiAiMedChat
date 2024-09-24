@@ -9,6 +9,7 @@ import profileRoutes from "@/routes/ProfileRoutes";
 import path from "path";
 import textbookRoutes from "./routes/TextBookRoutes";
 import socketSetup from "./utils/socketSetup";
+import MessagesRoutes from "./routes/MessagesRoutes";
 
 // setup server
 dotenv.config();
@@ -61,6 +62,7 @@ app.use(morgan("combined"));
 app.use("/api/authentication", authenticationRoutes);
 app.use("/api/profile", profileRoutes);
 app.use("/api/textbooks", textbookRoutes);
+app.use("/api/messages", MessagesRoutes);
 
 //get on / route with fun text hahaha
 app.get("/", (request: Request, response: Response) => {

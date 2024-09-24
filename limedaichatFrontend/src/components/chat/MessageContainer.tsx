@@ -2,11 +2,21 @@ import {
   selectChatMessages,
   selectChatType,
   selectCurrentChat,
+  setSelectedChatMessages,
 } from "@/state/slices/chatSlice";
-import { ChatMessage, ChatType, RootState, Textbook } from "@/types";
+import {
+  AppDispatch,
+  ChatMessage,
+  ChatType,
+  fetchMessagesResponse,
+  RootState,
+  Textbook,
+} from "@/types";
 import { useEffect, useRef } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
+import { usePostFetchMessagesMutation } from "@/state/api/messagesApi";
+import { useEffectAsync } from "@/hooks/useEffectAsync";
 /**
  * Message container for the chat history
  * @author Sriram Sundar
@@ -18,6 +28,23 @@ const MessageContainer: React.FC = () => {
   const chatData = useSelector(selectCurrentChat);
   const chatMessages = useSelector(selectChatMessages);
   const userInfo = useSelector((state: RootState) => state.auth.userInfo);
+  const dispatch: AppDispatch = useDispatch();
+  const [triggerFetchMessages] = usePostFetchMessagesMutation();
+
+  useEffectAsync(async () => {
+    if ((chatData as Textbook)._id) {
+      if (chatType === ("textbook" as ChatType)) {
+        const response = (await triggerFetchMessages({
+          textbookId: (chatData as Textbook)._id,
+          receiverModel: "Textbook",
+        })) as fetchMessagesResponse;
+
+        if ("data" in response && response.data.messages) {
+          dispatch(setSelectedChatMessages(response.data.messages));
+        }
+      }
+    }
+  }, [chatData, chatType, setSelectedChatMessages]);
 
   useEffect(() => {
     if (scrollRef.current) {
