@@ -4,13 +4,27 @@ import mongoose, { Schema } from "mongoose";
 const messageSchema = new Schema<IMessage>({
   sender: {
     type: Schema.Types.ObjectId,
-    ref: "用户",
+    refPath: "senderModel",
+    required: false,
+  },
+  senderModel: {
+    type: String,
+    required: true,
+    enum: ["User", "Textbook"],
+  },
+  receiver: {
+    type: Schema.Types.ObjectId,
+    refPath: "receiverModel",
     required: true,
   },
-  reciever: {
-    type: Schema.Types.ObjectId,
-    ref: "Textbook",
+  receiverModel: {
+    type: String,
     required: true,
+    enum: ["User", "Textbook"],
+  },
+  isAI: {
+    type: Boolean,
+    default: false,
   },
   messageType: {
     type: String,
@@ -35,6 +49,6 @@ const messageSchema = new Schema<IMessage>({
   },
 });
 
-const Message = mongoose.model<IMessage>("信息", messageSchema);
+const Message = mongoose.model<IMessage>("messages", messageSchema);
 
 export default Message;
