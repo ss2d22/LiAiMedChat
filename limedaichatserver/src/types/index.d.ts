@@ -50,6 +50,7 @@ declare interface Request extends e.Request {
     avatar?: string;
     theme?: number;
     textbook?: string;
+    textbookId?: string;
   };
 }
 
@@ -146,21 +147,46 @@ declare interface JwtPayload extends JwtPayload {
  * @typedef {IMessage}
  * @extends {Document}
  */
-interface IMessage extends Document {
+interface IMessage extends mongoose.Document {
   /**
-   * sender of the message, required field of type ObjectId
+   * sender of the message, optional field of type ObjectId (null for AI messages)
+   * @author Sriram Sundar
+   *
+   * @type {mongoose.Types.ObjectId | null}
+   */
+  sender: mongoose.Types.ObjectId | null;
+  /**
+   * model type of the sender, required field of type string with enum
+   * @author Sriram Sundar
+   *
+   * @type {string}
+   */
+  senderModel: string;
+
+  /**
+   * receiver of the message, required field of type ObjectId
    * @author Sriram Sundar
    *
    * @type {mongoose.Types.ObjectId}
    */
-  sender: mongoose.Types.ObjectId;
+  receiver: mongoose.Types.ObjectId;
+
   /**
-   * textbook user is chatting with, required field of type ObjectId ()
+   * model type of the receiver, required field of type string
    * @author Sriram Sundar
    *
-   * @type {mongoose.Types.ObjectId}
+   * @type {('用户' | 'Textbook')}
    */
-  reciever: mongoose.Types.ObjectId;
+  receiverModel: "用户" | "Textbook";
+
+  /**
+   * flag to indicate if the message is from AI, default is false
+   * @author Sriram Sundar
+   *
+   * @type {boolean}
+   */
+  isAI: boolean;
+
   /**
    * type of message, required field of type string with enum
    * values text and file
@@ -169,20 +195,23 @@ interface IMessage extends Document {
    * @type {("text" | "file")}
    */
   messageType: "text" | "file";
+
   /**
    * content of the message, required field if messageType is text of type string
    * @author Sriram Sundar
    *
-   * @type {?string}
+   * @type {string | undefined}
    */
   content?: string;
+
   /**
    * file of the message, required field if messageType is file of type string
    * @author Sriram Sundar
    *
-   * @type {?string}
+   * @type {string | undefined}
    */
   file?: string;
+
   /**
    * timestamp of the message, default value is Date.now
    * @author Sriram Sundar
@@ -191,7 +220,6 @@ interface IMessage extends Document {
    */
   timeStamp: Date;
 }
-
 /**
  * Textbook Schema for the mongoDb model for the textbook collection
  * @author Sriram Sundar
@@ -238,27 +266,13 @@ interface ITextbook extends Document {
 }
 
 //TODO: if i dun end up needing to exted this just get rid of it
+/**
+ * Description placeholder
+ * @author Sriram Sundar
+ *
+ * @export
+ * @interface UserSocketMap
+ * @typedef {UserSocketMap}
+ * @extends {Map<string, string>}
+ */
 export interface UserSocketMap extends Map<string, string> {}
-
-//tbd jsdocs low laprop battery
-export interface ChatMessage {
-  sender: string;
-  textbookId: string;
-  content: string;
-  messageType: "text" | "file";
-  file?: string;
-}
-
-export interface ChannelMessage {
-  channelId: string;
-  sender: string;
-  content: string;
-  messageType: "text" | "file";
-  fileUrl?: string;
-}
-
-export interface Channel {
-  _id: Schema.Types.ObjectId;
-  members: Schema.Types.ObjectId[];
-  // need to add more fields if i need la
-}

@@ -61,7 +61,7 @@ userSchema.pre<IUserSchema>("save", async function (next) {
  * @type {mongoose.Model<IUser>}
  */
 const User: mongoose.Model<IUserSchema> = mongoose.model<IUserSchema>(
-  "用户",
+  "User",
   userSchema
 );
 

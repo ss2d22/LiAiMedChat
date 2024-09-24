@@ -63,6 +63,8 @@ const NewChat: React.FC = () => {
   const selectNewTextbook = (textbook: Textbook) => {
     setNewChatModal(false);
     dispatch(setSelectedChatType("textbook" as ChatType));
+    console.log(textbook);
+
     dispatch(setSelectedChatData(textbook));
     console.log(textbook);
     setSearchedTextbooks([]);

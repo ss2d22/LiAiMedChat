@@ -8,5 +8,9 @@ import { useContext } from "react";
  * @returns {Socket | null} The socket instance or null if not available
  */
 export const useSocket = () => {
-  return useContext(SocketContext);
+  const context = useContext(SocketContext);
+  if (context === undefined) {
+    throw new Error("useSocket must be used within a SocketProvider");
+  }
+  return context;
 };

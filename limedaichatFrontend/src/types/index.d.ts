@@ -2,8 +2,9 @@ import { authenticationApi } from "@/state/api/authenticationApi";
 import { store } from "@/state/store";
 import { SerializedError } from "@reduxjs/toolkit";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
-import { ReactNode } from "react";
+import { createContext, ReactNode } from "react";
 import { textbooksApi } from "@/state/api/textbookApi";
+import { Socket } from "socket.io-client";
 // Types will be defined here
 
 //api error Types
@@ -237,6 +238,14 @@ declare interface Textbook {
    * @type {string}
    */
   description: string;
+
+  /**
+   * id of the textbook
+   * @author Sriram Sundar
+   *
+   * @type {string}
+   */
+  _id: string;
 }
 /**
  * sucessful esponse structure for search textbooks endpoint
@@ -491,11 +500,11 @@ export interface TitleProps {
 }
 
 /**
- * types of chats
+ * Types of chats
  * @author Sriram Sundar
  *
  * @export
- * @enum {number}
+ * @enum {string}
  */
 export enum ChatType {
   TEXTBOOK = "textbook",
@@ -510,96 +519,142 @@ export enum ChatType {
  * @interface ChatData
  * @typedef {ChatData}
  */
-export type ChatData = Textbook;
+export type ChatData = Textbook | UserInformation;
 
 /**
- * chat message structure (update as needed just a prediction for
- * what it might look like)
+ * Structure of a chat message
  * @author Sriram Sundar
  *
  * @export
  * @interface ChatMessage
- * @typedef {ChatMessage}
  */
 export interface ChatMessage {
   /**
-   * id of message
-   * @author Sriram Sundar
-   *
+   * Unique identifier for the message
    * @type {string}
    */
   id: string;
+
   /**
-   * sender id
-   * @author Sriram Sundar
-   *
-   * @type {string}
+   * Sender of the message (can be a user, textbook, or null for system messages)
+   * @type {UserInformation | Textbook | null}
    */
-  senderId: string;
+  sender: UserInformation | Textbook | null;
+
   /**
-   * content of the message
-   * @author Sriram Sundar
-   *
-   * @type {string}
+   * Receiver of the message (can be a user or textbook)
+   * @type {UserInformation | Textbook}
    */
-  content: string;
+  receiver: UserInformation | Textbook;
+
   /**
-   * timestamp of the message
-   * @author Sriram Sundar
-   *
+   * Model type of the receiver
+   * @type {"用户" | "Textbook"}
+   */
+  receiverModel: "用户" | "Textbook";
+
+  /**
+   * Indicates if the message is from an AI
+   * @type {boolean}
+   */
+  isAI: boolean;
+
+  /**
+   * Type of the message
+   * @type {"text" | "file"}
+   */
+  messageType: "text" | "file";
+
+  /**
+   * File path if the message is a file
+   * @type {string | undefined}
+   */
+  file?: string;
+
+  /**
+   * Content of the message if it's a text message
+   * @type {string | undefined}
+   */
+  content?: string;
+
+  /**
+   * Timestamp of when the message was sent
    * @type {Date}
    */
   timestamp: Date;
+
   /**
-   * wether the message has been read or not
-   * @author Sriram Sundar
-   *
+   * Indicates if the message has been read
    * @type {boolean}
    */
   read: boolean;
 }
 
 /**
- * state of the chat
+ * State of the chat in the Redux store
  * @author Sriram Sundar
  *
+ * @export
  * @interface ChatState
- * @typedef {ChatState}
  */
-interface ChatState {
+export interface ChatState {
   /**
-   * possible states of chat type
-   * @author Sriram Sundar
-   *
-   * @type {(ChatType | undefined)}
+   * Currently selected chat type
+   * @type {ChatType | undefined}
    */
   selectedChatType: ChatType | undefined;
+
   /**
-   * possible states of chat data
-   * @author Sriram Sundar
-   *
-   * @type {(ChatData | undefined)}
+   * Data of the currently selected chat
+   * @type {ChatData | undefined}
    */
   selectedChatData: ChatData | undefined;
+
   /**
-   * possible states of chat messages
-   * @author Sriram Sundar
-   *
+   * Messages in the currently selected chat
    * @type {ChatMessage[]}
    */
   selectedChatMessages: ChatMessage[];
+
   /**
-   * loading state
-   * @author Sriram Sundar
-   *
+   * List of textbooks available for chat
+   * @type {Textbook[]}
+   */
+  textbooks: Textbook[];
+
+  /**
+   * Indicates if a file is currently being uploaded
+   * @type {boolean}
+   */
+  isUploading: boolean;
+
+  /**
+   * Progress of the current file upload
+   * @type {number}
+   */
+  fileUploadProgress: number;
+
+  /**
+   * Indicates if a file is currently being downloaded
+   * @type {boolean}
+   */
+  isDownloading: boolean;
+
+  /**
+   * Progress of the current file download
+   * @type {number}
+   */
+  downloadProgress: number;
+
+  /**
+   * Indicates if the chat is in a loading state
    * @type {boolean}
    */
   isLoading: boolean;
+
   /**
-   * possible states of error
-   * @author Sriram Sundar
-   *
-   * @type {(string | null)}
+   * Any error message related to chat operations
+   * @type {string | null}
    */
   error: string | null;
 }
@@ -620,3 +675,28 @@ interface SocketProviderProps {
    */
   children: ReactNode;
 }
+
+/**
+ * SocketContextType for the socket context component
+ * @author Sriram Sundar
+ *
+ * @interface SocketContextType
+ * @typedef {SocketContextType}
+ */
+interface SocketContextType {
+  /**
+   * Socket instance for the application
+   * @author Sriram Sundar
+   *
+   * @type {(Socket | null)}
+   */
+  socket: Socket | null;
+  /**
+   * Indicates if the socket is connected to the server
+   * @author Sriram Sundar
+   *
+   * @type {boolean}
+   */
+  isConnected: boolean;
+}
+

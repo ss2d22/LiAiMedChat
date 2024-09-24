@@ -1,8 +1,13 @@
+import { useSocket } from "@/hooks/useSocket";
+import { selectChatType, selectCurrentChat } from "@/state/slices/chatSlice";
+import { ChatType, RootState, Textbook } from "@/types";
 import EmojiPicker, { EmojiClickData, Theme } from "emoji-picker-react";
+import test from "node:test";
 import { useEffect, useRef, useState } from "react";
 import { GrAttachment } from "react-icons/gr";
 import { IoSend } from "react-icons/io5";
 import { RiEmojiStickerLine } from "react-icons/ri";
+import { useSelector } from "react-redux";
 
 /**
  *  Message Bar component with the send button , emoji picker and file upload button
@@ -13,6 +18,10 @@ const MessageBar: React.FC = () => {
   const [Message, setMessage] = useState<string>("");
   const emojiRef = useRef<HTMLDivElement | null>(null);
   const [emojiOpen, setEmojiOpen] = useState<boolean>(false);
+  const chatType = useSelector(selectChatType);
+  const chatData = useSelector(selectCurrentChat);
+  const userInfo = useSelector((state: RootState) => state.auth.userInfo);
+  const socket = useSocket();
 
   useEffect(() => {
     const clickOutside = (event: MouseEvent) => {
@@ -33,7 +42,21 @@ const MessageBar: React.FC = () => {
     setMessage((Message) => Message + emoji.emoji);
   };
   const sendMessage = () => {
-    console.log("message sent la");
+    console.log("sending message");
+    console.log(chatType);
+
+    if (chatType === ("textbook" as ChatType)) {
+      console.log("sending message to textbook");
+      console.log(socket);
+      socket?.emit("send-message", {
+        sender: userInfo?.id,
+        content: Message,
+        receiver: (chatData as Textbook)?._id,
+        receiverModel: "Textbook",
+        isAI: false,
+        messageType: "text",
+      });
+    }
   };
   return (
     <div className="h-[10vh] bg-[#1c1d25] flex justify-center items-center px-8 mb-6 gap-6">
