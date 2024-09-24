@@ -342,6 +342,23 @@ declare interface fetchUserInfoResponse {
   };
 }
 
+declare interface fetchMessages {
+  data: {
+    /**
+     * messages from the server
+     * @type {ChatMessage[]}
+     */
+    messages: ChatMessage[];
+  };
+}
+
+/**
+ * Description placeholder
+ * @author Sriram Sundar
+ *
+ * @typedef {fetchMessagesResponse}
+ */
+declare type fetchMessagesResponse = fetchMessages | ErrorResponse;
 // types for state management
 /**
  * User Information global state
@@ -699,4 +716,3 @@ interface SocketContextType {
    */
   isConnected: boolean;
 }
-

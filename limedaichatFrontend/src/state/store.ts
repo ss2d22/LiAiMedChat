@@ -4,7 +4,7 @@ import authReducer from "@/state/slices/authSlice";
 import { profileApi } from "@/state/api/profileApi";
 import { textbooksApi } from "@/state/api/textbookApi";
 import chatReducer from "@/state/slices/chatSlice";
-
+import { messagesApi } from "@/state/api/messagesApi";
 /**
  * store to be used in the frontend using react redux
  * @author Sriram Sundar
@@ -16,6 +16,7 @@ export const store: Store = configureStore({
     [authenticationApi.reducerPath]: authenticationApi.reducer,
     [profileApi.reducerPath]: profileApi.reducer,
     [textbooksApi.reducerPath]: textbooksApi.reducer,
+    [messagesApi.reducerPath]: messagesApi.reducer,
     auth: authReducer,
     chat: chatReducer,
   },
@@ -23,5 +24,6 @@ export const store: Store = configureStore({
     getDefaultMiddleware()
       .concat(authenticationApi.middleware)
       .concat(profileApi.middleware)
-      .concat(textbooksApi.middleware),
+      .concat(textbooksApi.middleware)
+      .concat(messagesApi.middleware),
 });
