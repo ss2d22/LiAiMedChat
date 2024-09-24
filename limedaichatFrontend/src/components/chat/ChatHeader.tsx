@@ -3,7 +3,7 @@ import {
   selectChatType,
   selectCurrentChat,
 } from "@/state/slices/chatSlice";
-import { AppDispatch, ChatType } from "@/types";
+import { AppDispatch, ChatType, Textbook } from "@/types";
 import { RiCloseFill } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import { Avatar, AvatarImage } from "../ui/avatar";
@@ -37,7 +37,7 @@ const ChatHeader: React.FC = () => {
           </div>
           <div>
             {selectedChatType === ("textbook" as ChatType) &&
-              `${selectedChatData?.title}`}
+              `${(selectedChatData as Textbook)?.title}`}
           </div>
         </div>
         <div className="flex items-center justify-center gap-5">
