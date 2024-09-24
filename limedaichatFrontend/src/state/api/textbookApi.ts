@@ -1,5 +1,9 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { BACKEND_URL, SEARCH_TEXTBOOKS_ROUTE } from "@/constants";
+import {
+  BACKEND_URL,
+  GET_TEXTBOOKS_FOR_LIST_ROUTE,
+  SEARCH_TEXTBOOKS_ROUTE,
+} from "@/constants";
 
 /**
  * textbook related endpoints for the apis from the backend to be used
@@ -22,6 +26,12 @@ export const textbooksApi = createApi({
         body: payload as string,
       }),
     }),
+    getGetTextbooksForList: build.query({
+      query: (payload) => ({
+        url: GET_TEXTBOOKS_FOR_LIST_ROUTE,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -31,4 +41,8 @@ export const textbooksApi = createApi({
  * @author Sriram Sundar
  *
  */
-export const { usePostSearchTextbooksMutation } = textbooksApi;
+export const {
+  usePostSearchTextbooksMutation,
+  useGetGetTextbooksForListQuery,
+  useLazyGetGetTextbooksForListQuery,
+} = textbooksApi;

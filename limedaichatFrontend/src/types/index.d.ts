@@ -716,3 +716,7 @@ interface SocketContextType {
    */
   isConnected: boolean;
 }
+
+export interface TextbookListProps {
+  textbooks: Textbook[];
+}
