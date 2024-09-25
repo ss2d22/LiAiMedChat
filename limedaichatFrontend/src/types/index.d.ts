@@ -717,6 +717,20 @@ interface SocketContextType {
   isConnected: boolean;
 }
 
+/**
+ * Description placeholder
+ * @author Sriram Sundar
+ *
+ * @export
+ * @interface TextbookListProps
+ * @typedef {TextbookListProps}
+ */
 export interface TextbookListProps {
+  /**
+   * Description placeholder
+   * @author Sriram Sundar
+   *
+   * @type {Textbook[]}
+   */
   textbooks: Textbook[];
 }

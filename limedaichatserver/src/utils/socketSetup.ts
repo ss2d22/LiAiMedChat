@@ -15,6 +15,8 @@ import {
   MessagesPlaceholder,
 } from "@langchain/core/prompts";
 import { BaseMessage, HumanMessage, AIMessage } from "@langchain/core/messages";
+import { Document } from "langchain/document";
+import { cleanText, splitTextIntoChunks } from "@/utils/textUtils";
 
 dotenv.config();
 
@@ -166,7 +168,6 @@ const setupSocket = (server: Server): SocketIOServer => {
       console.log("AI response generated");
       console.log("AI response: ", response);
 
-      // Create and save the AI response message
       const aiMessage = await Message.create({
         sender: textbook._id,
         receiver: sender,
@@ -179,9 +180,61 @@ const setupSocket = (server: Server): SocketIOServer => {
       });
       console.log("AI message created");
 
-      // Send the AI response back to the user
       if (userSocketId) {
         io.to(userSocketId).emit("receive-message", aiMessage);
+      }
+
+      console.log("Response context: ", response.context);
+
+      const contextDocuments = response.context as Document[];
+
+      if (Array.isArray(contextDocuments) && contextDocuments.length > 0) {
+        const selectedDocuments = contextDocuments.slice();
+
+        for (let i = 0; i < selectedDocuments.length; i++) {
+          const doc = selectedDocuments[i];
+          console.log("Original Document Content:", doc.pageContent);
+
+          const cleanedPageContent = cleanText(doc.pageContent);
+
+          console.log("Cleaned Document Content:", cleanedPageContent);
+
+          const messageHeader = `【片段${i + 1}】\n`;
+
+          const maxMessageLength = 1000;
+
+          const contentChunks = splitTextIntoChunks(
+            cleanedPageContent,
+            maxMessageLength - messageHeader.length
+          );
+
+          let isFirstChunk = true;
+
+          for (let j = 0; j < contentChunks.length; j++) {
+            const chunkContent =
+              (isFirstChunk ? messageHeader : "") + contentChunks[j];
+            isFirstChunk = false;
+
+            const contextMessage = await Message.create({
+              sender: textbook._id,
+              receiver: sender,
+              senderModel: "Textbook",
+              receiverModel: "User",
+              isAI: true,
+              messageType: "text",
+              content: chunkContent,
+              timeStamp: new Date(),
+            });
+            console.log("Context message created");
+            console.log("Context message: ", contextMessage);
+
+            if (userSocketId) {
+              io.to(userSocketId).emit("receive-message", contextMessage);
+            }
+          }
+        }
+      } else {
+        console.log("No context documents available.");
       }
     } catch (error) {
       console.error("Error handling message:", error);

@@ -18,6 +18,13 @@ const loadTextbooks = async () => {
         vectorStorePath: "output.index",
         textFilePath: "⼈体分⼦与细胞.txt",
       },
+      {
+        title: "book 2",
+        author: "beibei",
+        description: "nothing",
+        vectorStorePath: "output.index",
+        textFilePath: "⼈体分⼦与细胞.txt",
+      },
     ];
 
     for (const book of textbooksData) {
