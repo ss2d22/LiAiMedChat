@@ -578,9 +578,9 @@ export interface ChatMessage {
 
   /**
    * Type of the message
-   * @type {"text" | "file"}
+   * @type {"text" | "file" | "context"}
    */
-  messageType: "text" | "file";
+  messageType: "text" | "file" | "context";
 
   /**
    * File path if the message is a file

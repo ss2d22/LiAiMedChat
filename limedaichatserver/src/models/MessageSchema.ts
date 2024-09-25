@@ -28,7 +28,7 @@ const messageSchema = new Schema<IMessage>({
   },
   messageType: {
     type: String,
-    enum: ["text", "file"],
+    enum: ["text", "file", "context"],
     required: true,
   },
   content: {

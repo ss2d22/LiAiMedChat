@@ -54,7 +54,8 @@ const MessageContainer: React.FC = () => {
 
   const renderMessage = (message: ChatMessage) => (
     <div className={`${message.isAI ? "text-left" : "text-right"}`}>
-      {message.messageType === "text" && (
+      {(message.messageType === "text" ||
+        message.messageType === "context") && (
         <div
           className={`${
             message.isAI

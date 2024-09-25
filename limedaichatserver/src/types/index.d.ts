@@ -193,9 +193,9 @@ interface IMessage extends mongoose.Document {
    * values text and file
    * @author Sriram Sundar
    *
-   * @type {("text" | "file")}
+   * @type {("text" | "file" | "context")}
    */
-  messageType: "text" | "file";
+  messageType: "text" | "file" | "context";
 
   /**
    * content of the message, required field if messageType is text of type string
