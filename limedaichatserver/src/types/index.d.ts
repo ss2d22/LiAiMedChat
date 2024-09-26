@@ -1,7 +1,6 @@
 import e from "express";
 import { JwtPayload } from "jsonwebtoken";
 import { Document } from "mongoose";
-import { Schema } from "mongoose";
 
 /**
  * type for Email
@@ -266,9 +265,8 @@ interface ITextbook extends Document {
   textFilePath: string | null;
 }
 
-//TODO: if i dun end up needing to exted this just get rid of it
 /**
- * Description placeholder
+ * User Socket Map to store the mapping of user id to socket id
  * @author Sriram Sundar
  *
  * @export
@@ -276,4 +274,4 @@ interface ITextbook extends Document {
  * @typedef {UserSocketMap}
  * @extends {Map<string, string>}
  */
-export interface UserSocketMap extends Map<string, string> {}
+export type UserSocketMap = Map<string, string>;

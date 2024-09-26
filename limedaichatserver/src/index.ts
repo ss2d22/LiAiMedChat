@@ -10,6 +10,7 @@ import path from "path";
 import textbookRoutes from "./routes/TextBookRoutes";
 import socketSetup from "./utils/socketSetup";
 import MessagesRoutes from "./routes/MessagesRoutes";
+import { Server } from "http";
 
 // setup server
 dotenv.config();
@@ -69,13 +70,19 @@ app.get("/", (request: Request, response: Response) => {
   response.status(200).send("server for limedai chat app");
 });
 
-//start server, serup socket and connect to mongodb
-const server = app
+//start server, setup socket and connect to mongodb
+/**
+ * server is an instance of the express server that we will use to start our server
+ * and setup socket connections
+ * @author Sriram Sundar
+ *
+ * @type {Server}
+ */
+const server: Server = app
   .listen(PORT, () => {
     console.log("Server running at PORT: ", PORT);
   })
   .on("error", (error) => {
-    // gracefully handle the error
     throw new Error(error.message);
   });
 

@@ -3,7 +3,7 @@ import { selectChatType, selectCurrentChat } from "@/state/slices/chatSlice";
 import { ChatType, RootState, Textbook } from "@/types";
 import EmojiPicker, { EmojiClickData, Theme } from "emoji-picker-react";
 import { useEffect, useRef, useState } from "react";
-import { GrAttachment } from "react-icons/gr";
+//import { GrAttachment } from "react-icons/gr";
 import { IoSend } from "react-icons/io5";
 import { RiEmojiStickerLine } from "react-icons/ri";
 import { useSelector } from "react-redux";

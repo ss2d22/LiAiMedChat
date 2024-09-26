@@ -1,6 +1,6 @@
 import { books } from "@/assets";
 import Title from "@/components/Title";
-import ProfileInfo from "../profileInfo";
+import ProfileInfo from "@/components/chat/ProfileInfo";
 import NewChat from "../NewChat";
 import { useEffectAsync } from "@/hooks/useEffectAsync";
 import { useGetGetTextbooksForListQuery } from "@/state/api/textbookApi";
@@ -21,8 +21,10 @@ const ChatSelectedContainer: React.FC = () => {
 
   useEffectAsync(async () => {
     const result = await refetch();
-    if (result.data && "textbooks" in result.data) {
-      dispatch(setTextbooks(result.data.textbooks as Textbook[]));
+    if (result.data && (result.data as { textbooks?: Textbook[] }).textbooks) {
+      dispatch(
+        setTextbooks((result.data as { textbooks: Textbook[] }).textbooks)
+      );
     }
   }, []);
   return (

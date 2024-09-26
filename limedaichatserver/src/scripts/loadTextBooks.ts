@@ -5,7 +5,14 @@ import Textbook from "@/models/Textbookmodel";
 
 dotenv.config();
 
-const loadTextbooks = async () => {
+/**
+ * Load textbooks into the database.
+ * @author Sriram Sundar
+ *
+ * @async
+ * @returns {Promise<void>}
+ */
+const loadTextbooks = async (): Promise<void> => {
   try {
     await mongoose.connect(process.env.MONGODB_URI as string);
     console.log("Connected to MongoDB");

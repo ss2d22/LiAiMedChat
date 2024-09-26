@@ -9,6 +9,7 @@ import aiService from "@/services/AiService";
  *
  * @author Sriram Sundar
  *
+ * @async
  * @param io - The Socket.IO server instance.
  * @param userSocketMap - A map of user IDs to socket IDs.
  * @param message - The incoming message object.

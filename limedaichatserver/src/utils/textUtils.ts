@@ -1,4 +1,11 @@
-export const cleanText = (text: string) => {
+/**
+ * clean up the inputs before using regex
+ * @author Sriram Sundar
+ *
+ * @param {string} text
+ * @returns {string}
+ */
+export const cleanText = (text: string): string => {
   let cleanedText = text.replace(/\p{Cc}/gu, "");
 
   cleanedText = cleanedText.replace(
@@ -15,7 +22,18 @@ export const cleanText = (text: string) => {
   return cleanedText;
 };
 
-export const splitTextIntoChunks = (text: string, chunkSize: number) => {
+/**
+ * Split a text into chunks of a given size.
+ * @author Sriram Sundar
+ *
+ * @param {string} text
+ * @param {number} chunkSize
+ * @returns {string[]}
+ */
+export const splitTextIntoChunks = (
+  text: string,
+  chunkSize: number
+): string[] => {
   const chunks = [];
   let currentIndex = 0;
 

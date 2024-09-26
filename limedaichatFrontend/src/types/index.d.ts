@@ -2,7 +2,7 @@ import { authenticationApi } from "@/state/api/authenticationApi";
 import { store } from "@/state/store";
 import { SerializedError } from "@reduxjs/toolkit";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
-import { createContext, ReactNode } from "react";
+import { ReactNode } from "react";
 import { textbooksApi } from "@/state/api/textbookApi";
 import { Socket } from "socket.io-client";
 // Types will be defined here
@@ -353,7 +353,7 @@ declare interface fetchMessages {
 }
 
 /**
- * Description placeholder
+ * fetchMessagesResponse type for the response from the fetch messages endpoint from the LiMedAi Server
  * @author Sriram Sundar
  *
  * @typedef {fetchMessagesResponse}
@@ -598,7 +598,7 @@ export interface ChatMessage {
    * Timestamp of when the message was sent
    * @type {Date}
    */
-  timestamp: Date;
+  timeStamp: Date;
 
   /**
    * Indicates if the message has been read
@@ -718,7 +718,7 @@ interface SocketContextType {
 }
 
 /**
- * Description placeholder
+ * TextbookListProps for the textbook list component
  * @author Sriram Sundar
  *
  * @export
@@ -727,7 +727,7 @@ interface SocketContextType {
  */
 export interface TextbookListProps {
   /**
-   * Description placeholder
+   * List of textbooks to be displayed
    * @author Sriram Sundar
    *
    * @type {Textbook[]}
