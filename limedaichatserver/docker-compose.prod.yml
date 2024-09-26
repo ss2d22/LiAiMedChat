@@ -2,25 +2,14 @@ services:
   app:
     build:
       context: .
+      dockerfile: Dockerfile
       args:
         NODE_ENV: production
     ports:
-      - "3117:3117"
-    depends_on:
-      - db
+      - "${APP_HOST_PORT}:${APP_CONTAINER_PORT}"
     environment:
       - NODE_ENV=production
-      - MONGODB_URI=mongodb://db:27017/limedaichat-app
+      - MONGODB_URI=${MONGODB_URI}
+      - PORT=${APP_CONTAINER_PORT}
     restart: always
     command: npm run start
-
-  db:
-    image: mongo:latest
-    volumes:
-      - mongodb_data:/data/db
-    ports:
-      - "27017:27017"
-    restart: always
-
-volumes:
-  mongodb_data:

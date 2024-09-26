@@ -2,8 +2,8 @@ services:
   app:
     build:
       context: .
-      args:
-        NODE_ENV: development
+      dockerfile: Dockerfile
+      target: development
     ports:
       - "3117:3117"
     volumes:
@@ -15,7 +15,6 @@ services:
       - NODE_ENV=development
       - MONGODB_URI=mongodb://db:27017/limedaichat-app
     restart: always
-    command: npm run dev
 
   db:
     image: mongo:latest
