@@ -1,0 +1,26 @@
+services:
+  app:
+    build:
+      context: .
+      args:
+        NODE_ENV: production
+    ports:
+      - "3117:3117"
+    depends_on:
+      - db
+    environment:
+      - NODE_ENV=production
+      - MONGODB_URI=mongodb://db:27017/limedaichat-app
+    restart: always
+    command: npm run start
+
+  db:
+    image: mongo:latest
+    volumes:
+      - mongodb_data:/data/db
+    ports:
+      - "27017:27017"
+    restart: always
+
+volumes:
+  mongodb_data:
