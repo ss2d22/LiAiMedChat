@@ -1,6 +1,9 @@
 services:
   app:
-    build: .
+    build:
+      context: .
+      args:
+        NODE_ENV: development
     ports:
       - "3117:3117"
     volumes:
@@ -9,13 +12,18 @@ services:
     depends_on:
       - db
     environment:
+      - NODE_ENV=development
       - MONGODB_URI=mongodb://db:27017/limedaichat-app
+    restart: always
+    command: npm run dev
+
   db:
-    image: mongo
+    image: mongo:latest
     volumes:
       - mongodb_data:/data/db
     ports:
       - "27017:27017"
+    restart: always
 
 volumes:
   mongodb_data:

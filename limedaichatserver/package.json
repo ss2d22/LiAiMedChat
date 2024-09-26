@@ -9,7 +9,10 @@
     "generate-docs-json": "ts-node src/utils/swaggerOptions.ts",
     "convert-json-to-yaml": "ts-node src/utils/JsonToYaml.ts",
     "generate-docs": "npm run generate-docs-json && npm run convert-json-to-yaml",
-    "load-vectors": "ts-node src/scripts/loadTextBooks.ts"
+    "load-vectors": "ts-node src/scripts/loadTextBooks.ts",
+    "build": "tsc",
+    "load-vectors-prod": "node dist/scripts/loadTextBooks.js",
+    "start": "node dist/scripts/loadTextBooks.js && node dist/index.js"
   },
   "repository": {
     "type": "git",

@@ -1,21 +1,25 @@
 # Layer 1: Use the official Node.js image as the base image
 FROM node:21
 
-# Layer 2:  Telling Docker to create a directory called `app` in the container and set it as the working directory.
+# Layer 2: Set the working directory to /app
 WORKDIR /app
 
-# Layer 3: Copying the package.json file from the root of the project to the `app` directory in the container.
+# Layer 3: Copy package.json and package-lock.json (for npm ci, if using package-lock)
 COPY package*.json ./
 
-# Layer 4: Installing the dependencies listed in the package.json file.
-RUN npm install
+# Layer 4: Install dependencies
+# If NODE_ENV is production, install only production dependencies
+ARG NODE_ENV=production
+RUN if [ "$NODE_ENV" = "production" ]; then npm install --production; else npm install; fi
 
-# Layer 5: Copying all the files from the root of the project to the `app` directory in the container.
+# Layer 5: Copy the rest of the application files
 COPY . .
 
-# Layer 6: Telling Docker that the container will listen on port 3117.
-EXPOSE 3117
-#change above to using env and use diff ports before deploying this is just for testing
+# Layer 6: Build the TypeScript files to JavaScript (only for production)
+RUN if [ "$NODE_ENV" = "production" ]; then npm run build; fi
 
-# Layer 7: Telling Docker to run the `npm run dev` command when the container is started.
-CMD ["npm", "run", "dev"]
+# Layer 7: Expose the app's port (default 3117)
+EXPOSE 3117
+
+# Layer 8: Default command to run depending on environment
+CMD if [ "$NODE_ENV" = "production" ]; then npm run start; else npm run dev; fi
