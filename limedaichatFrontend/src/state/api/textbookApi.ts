@@ -27,7 +27,7 @@ export const textbooksApi = createApi({
       }),
     }),
     getGetTextbooksForList: build.query({
-      query: (payload) => ({
+      query: () => ({
         url: GET_TEXTBOOKS_FOR_LIST_ROUTE,
         method: "GET",
       }),
