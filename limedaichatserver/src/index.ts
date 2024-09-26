@@ -87,6 +87,7 @@ const server: Server = app
   });
 
 socketSetup(server);
+console.log(MONGO_URI);
 
 mongoose
   .connect(MONGO_URI)
