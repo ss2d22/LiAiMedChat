@@ -1,7 +1,13 @@
 import { IMessage } from "@/types";
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Schema, Model } from "mongoose";
 
-const messageSchema = new Schema<IMessage>({
+/**
+ * Schema for storing the message information
+ * @author Sriram Sundar
+ *
+ * @type {Schema}
+ */
+const messageSchema: Schema = new Schema<IMessage>({
   sender: {
     type: Schema.Types.ObjectId,
     refPath: "senderModel",
@@ -28,7 +34,7 @@ const messageSchema = new Schema<IMessage>({
   },
   messageType: {
     type: String,
-    enum: ["text", "file"],
+    enum: ["text", "file", "context"],
     required: true,
   },
   content: {
@@ -49,6 +55,15 @@ const messageSchema = new Schema<IMessage>({
   },
 });
 
-const Message = mongoose.model<IMessage>("messages", messageSchema);
+/**
+ * Mongoose model for the message schema
+ * @author Sriram Sundar
+ *
+ * @type {Model<IMessage>}
+ */
+const Message: Model<IMessage> = mongoose.model<IMessage>(
+  "messages",
+  messageSchema
+);
 
 export default Message;

@@ -5,7 +5,14 @@ import Textbook from "@/models/Textbookmodel";
 
 dotenv.config();
 
-const loadTextbooks = async () => {
+/**
+ * Load textbooks into the database.
+ * @author Sriram Sundar
+ *
+ * @async
+ * @returns {Promise<void>}
+ */
+const loadTextbooks = async (): Promise<void> => {
   try {
     await mongoose.connect(process.env.MONGODB_URI as string);
     console.log("Connected to MongoDB");
@@ -15,6 +22,13 @@ const loadTextbooks = async () => {
         title: "⼈体分⼦与细胞 / Human Molecules and Cells",
         author: "OSBC",
         description: "human biology and molecules textbook",
+        vectorStorePath: "output.index",
+        textFilePath: "⼈体分⼦与细胞.txt",
+      },
+      {
+        title: "book 2",
+        author: "beibei",
+        description: "nothing",
         vectorStorePath: "output.index",
         textFilePath: "⼈体分⼦与细胞.txt",
       },

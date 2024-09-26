@@ -1,4 +1,4 @@
-import mongoose, { CallbackError } from "mongoose";
+import mongoose, { CallbackError, Schema, Model } from "mongoose";
 import { genSalt, hash } from "bcrypt";
 import { IUserSchema } from "@/types";
 
@@ -6,9 +6,9 @@ import { IUserSchema } from "@/types";
  * defines the user schema for the mongoDb database
  * @author Sriram Sundar
  *
- * @type {mongoose.Schema}
+ * @type {Schema}
  */
-const userSchema: mongoose.Schema = new mongoose.Schema({
+const userSchema: Schema = new Schema({
   email: {
     type: String,
     required: [true, "需要电子邮件"],
@@ -58,9 +58,9 @@ userSchema.pre<IUserSchema>("save", async function (next) {
  * defines the user model for the mongoDb database
  * @author Sriram Sundar
  *
- * @type {mongoose.Model<IUser>}
+ * @type {Model<IUser>}
  */
-const User: mongoose.Model<IUserSchema> = mongoose.model<IUserSchema>(
+const User: Model<IUserSchema> = mongoose.model<IUserSchema>(
   "User",
   userSchema
 );

@@ -14,8 +14,15 @@ import {
 } from "@/types";
 import { Avatar } from "@radix-ui/react-avatar";
 import { useDispatch, useSelector } from "react-redux";
-import { books } from "@/assets"; // Ensure this path is correct
+import { books } from "@/assets"; // ensure this does not throw errors as sometimes on arch it says it cannot find the module idk wy
 
+/**
+ * Textbook list component for the sidebar
+ * @author Sriram Sundar
+ *
+ * @param {{ textbooks: any; }} param0
+ * @param {*} param0.textbooks
+ */
 const TextbookList: React.FC<TextbookListProps> = ({ textbooks }) => {
   const selectedChatData = useSelector(selectCurrentChat);
   const dispatch: AppDispatch = useDispatch();

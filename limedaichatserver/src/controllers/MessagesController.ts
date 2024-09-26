@@ -3,7 +3,19 @@ import Message from "@/models/MessageSchema";
 import { Types } from "mongoose";
 import { Request } from "@/types";
 
-export const fetchmessages = async (req: Request, res: Response) => {
+/**
+ * Fetches messages between a user and a textbook.
+ * @author Sriram Sundar
+ *
+ * @async
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Promise<Response>}
+ */
+export const fetchmessages = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
   try {
     console.log(req.body);
 
