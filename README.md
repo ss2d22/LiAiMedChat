@@ -75,6 +75,7 @@ Note: On some systems, you may need to use `docker compose up --build`
 ```
 cd limedaiserver
 ```
+Note: from project root
 
 2. Create a `.env` file with the following content:
 
