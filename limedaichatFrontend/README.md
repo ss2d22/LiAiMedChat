@@ -1,32 +1,67 @@
-# Li Med Ai Chat Application FrontEnd
+# 🖥️ LiMedAI Frontend
 
-This is the frontend for Li Med Ai Chat application which is designed to be used by the medicine students of a specific university to ask questions and get asnwers from their textbook
+This is the frontend application for the LiMedAI Chat App, providing an interactive interface for medical students at Zhejiang Shuren University to engage with AI-powered responses.
 
-## How to run :
+## 🛠️ Technologies
 
-### 1) clone the repository :
+- ⚛️ React
+- 🔄 Redux Toolkit
+- 🔷 TypeScript
+- 🎨 Tailwind CSS
+- 🌈 Shad/Cn
+- 🔌 Socket.IO-client
+- ⚡ Vite
+
+## 🚀 Getting Started
+
+1. Clone the repository and navigate to the frontend directory:
 
 ```
 git clone https://github.com/ss2d22/LiAiMedChat.git
+cd limedaifrontend
 ```
 
-### 2) cd into the frontend and install node packages
+2. Create a `.env.local` file in the root directory with the following content:
 
 ```
-cd limedaichatFrontend
-npm i
+VITE_BACKEND_BASE_URL=your_backend_url
 ```
 
-### 3) rename .env.local.example to .env.local and update values
+3. Build and run the Docker container:
 
 ```
-tbd stuff like backend port will be here
+docker-compose up --build
 ```
 
-### 4) follow readMe in the backend folder and get the backend running
+Note: On some systems, you may need to use `docker compose up --build`
 
-### 5) run the frontend
+## 📁 Project Structure
 
-```
-npm run dev
-```
+- `src/`: Source code
+  - `components/`: React components
+  - `pages/`: Page components
+  - `state/`: Redux store and slices (api and global state)
+  - `hooks/`: Custom React hooks
+  - `utils/`: Utility functions
+  - `types/`: TypeScript type definitions
+  - `lib/`: tailwindCss util
+  - `providers/`: providers such as socket provider
+  - `context/`: context such as socket context
+  - `assets/` : assets for the website
+- `public/`: Static assets
+
+## 🎨 Features
+
+- 💬 Real-time chat interface
+- 🧠 Context-aware AI responses
+- 👻 Ghost buttons for viewing message context
+- 📱 Responsive design for various devices
+- 🔐 User authentication and profile management
+
+## 🖌️ Styling
+
+This project uses Tailwind CSS for styling.
+
+## 📫 Contact
+
+For any queries or suggestions, please open an issue in this repository or reach out on discord at @sriram_0_7.
